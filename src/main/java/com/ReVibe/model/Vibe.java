@@ -3,6 +3,7 @@ package com.ReVibe.model;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
@@ -18,20 +19,18 @@ public class Vibe {
 	@Column
 	@GeneratedValue
 	int vibeId;
-	@Column
-	String vibeName;
+	@Column @ManyToOne
+	Account poster;
 	@Column
 	String vibePic;
 	@Column
 	String vibeMessage;
 	@Column
-	int vibeLike;
-	@Column
 	@OneToMany
-	Account account;
+	Account[] likes;
 	@Column
-	@OneToMany
-	Comment comment;
+	@ManyToOne
+	Vibe parentVibe;
 	
 	
 }
