@@ -25,7 +25,7 @@ public class AccountController {
 	
 	@PostMapping(path="/updateprofile", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void updateprofile(@RequestBody Account account) {
-		Account currentAccount = this.accountService.getAccount(account);
+		Account currentAccount = this.accountService.findByUserId(account.getUserId());
 		if(account.getName() == "") {
 			account.setName(currentAccount.getName());
 		}
