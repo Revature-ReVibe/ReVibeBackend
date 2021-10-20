@@ -1,5 +1,7 @@
 package com.ReVibe.controller;
 
+
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,7 +22,23 @@ public class AccountController {
 	
 	@Autowired
 	public AccountController(AccountService accountService) {
-		this.accountService=accountService;
+
+		this.accountService = accountService;
+	}
+	
+	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Account findByUserId(int id) {
+		return this.accountService.findByUserId(id);
+	}
+
+	@GetMapping(path = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Account> findAll(){
+		return this.accountService.findAll();
+	}
+
+	@GetMapping(path = "/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Account findByName(String name) {
+		return this.accountService.findByName(name);
 	}
 	
 	@PostMapping(path="/updateprofile", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -37,5 +55,6 @@ public class AccountController {
 		}
 		this.accountService.merge(account);
 	}
+
 	
 }
