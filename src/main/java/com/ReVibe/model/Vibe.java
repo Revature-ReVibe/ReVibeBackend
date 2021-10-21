@@ -21,16 +21,19 @@ public class Vibe {
 	@Column
 	@GeneratedValue
 	int vibeId;
-	@ManyToOne
-	Account poster;
+
 	@Column
 	String vibePic;
 	@Column
 	String vibeMessage;
+	
+	@ManyToOne
+	Account poster;	
 	@OneToMany
 	Account[] likes;
 	@ManyToOne
 	Vibe parentVibe;
 	
 	
+			
 }
