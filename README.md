@@ -22,7 +22,7 @@ ReVibe is an emergent social media application that helps Revature employees con
 * User Profile
 * Modify Profile Information
 * Create a Post
-* Post Fee
+* Post Feed
 * Like a Post
 * Comments
 
