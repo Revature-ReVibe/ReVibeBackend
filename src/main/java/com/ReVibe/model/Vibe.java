@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,7 +26,7 @@ public class Vibe {
 	@Id
 	@Column(name = "vibeid")
 	int vibeId;
-	@Column(name = "name")
+	@Column(name = "vibename")
 	String vibeName;
 	@Column(name = "vibepic")
 	String vibePic;
@@ -37,5 +38,7 @@ public class Vibe {
 	@JoinColumn(name = "commentid")
 	List<Comment> comments;
 	
+	@Column(name = "accountid")
+	int accountid;
 	
 }
