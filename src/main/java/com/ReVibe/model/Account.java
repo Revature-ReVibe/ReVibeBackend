@@ -36,6 +36,8 @@ public class Account {
 	String password;
 	@Column(name = "name")
 	String name;
+	@Column(name = "email")
+	String email;
 	@Column(name = "profilepic")
 	String profilepic;
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
