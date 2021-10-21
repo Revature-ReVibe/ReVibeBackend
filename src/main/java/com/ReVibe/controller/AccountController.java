@@ -2,9 +2,11 @@ package com.ReVibe.controller;
 
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,7 +55,21 @@ public class AccountController {
 		if(account.getUsername()== "") {
 			account.setUsername(currentAccount.getUsername());
 		}
+		if(account.getProfilePic()== "") {
+			account.setProfilePic(currentAccount.getProfilePic());
+		}
 		this.accountService.merge(account);
+	}
+	
+	@GetMapping(path="/searchaccounts", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public List<Account> searchAccounts(String name){
+		
+		List<Account> accounts = this.accountService.findBySearchName(name);
+		for(int i=0; i< accounts.size(); i++) {
+			accounts.get(i).setUsername(null);
+			accounts.get(i).setPassword(null);
+		}
+		return accounts;
 	}
 
 	
