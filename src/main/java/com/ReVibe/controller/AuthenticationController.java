@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ReVibe.config.JwtUtil;
+import com.ReVibe.model.AuthenticationRequest;
 import com.ReVibe.model.AuthenticationResponse;
+import com.ReVibe.service.CustomUserDetailsService;
 
 @RestController
 public class AuthenticationController {
@@ -23,13 +26,13 @@ public class AuthenticationController {
 	private AuthenticationManager authenticationManager;
 
 	@Autowired
-	private AuthenticationUserDetailsService userDetailsService;
+	private CustomUserDetailsService userDetailsService;
 
 	@Autowired
 	private JwtUtil jwtTokenUtil;
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticateRequest authenticationRequest)
+	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest)
 			throws Exception {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -46,5 +49,10 @@ public class AuthenticationController {
 		return ResponseEntity.ok(new AuthenticationResponse(token));
 	}
 
+	@RequestMapping({"/hello"}) 
+		public String firstpage () {
+			return "Hello Word";
+		}
+	
 
 }

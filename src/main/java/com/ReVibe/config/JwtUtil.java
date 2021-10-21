@@ -32,7 +32,7 @@ public class JwtUtil {
 	public int getJwtExpirationInMs() {
 		return jwtExpirationInMs;
 	}
-	@Value("{$jwt.setJwtExpirationInM}")
+
 	public void setJwtExpirationInMs(int jwtExpirationInMs) {
 		this.jwtExpirationInMs = jwtExpirationInMs;
 	}
