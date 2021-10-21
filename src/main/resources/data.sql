@@ -1,0 +1,1 @@
+Insert into account (username, name, password) values ('ayankosk', 'Alex', 'root');

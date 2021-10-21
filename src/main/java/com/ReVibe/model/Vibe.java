@@ -1,9 +1,15 @@
 package com.ReVibe.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,26 +18,24 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name="vibe")
 public class Vibe {
 
 	@Id
-	@Column
-	@GeneratedValue
+	@Column(name = "vibeid")
 	int vibeId;
-	@Column
+	@Column(name = "name")
 	String vibeName;
-	@Column
+	@Column(name = "vibepic")
 	String vibePic;
-	@Column
+	@Column(name = "vibemessage")
 	String vibeMessage;
-	@Column
+	@Column(name = "vibelike")
 	int vibeLike;
-	@Column
 	@OneToMany
-	Account account;
-	@Column
-	@OneToMany
-	Comment comment;
+	@JoinColumn(name = "commentid")
+	List<Comment> comments;
 	
 	
 }
