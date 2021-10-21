@@ -23,6 +23,8 @@ public class Account {
 	String password;
 	@Column
 	String name;
+	@Column
+	String profilePic;
 	
 
 }
