@@ -1,3 +1,4 @@
+
 package com.ReVibe.model;
 
 import javax.persistence.Column;
@@ -23,6 +24,8 @@ public class Account {
 	String password;
 	@Column
 	String name;
+	@Column
+	String profilePic;
 	
-
 }
+
