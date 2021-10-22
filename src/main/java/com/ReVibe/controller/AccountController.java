@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ReVibe.model.Account;
 import com.ReVibe.service.AccountService;
 
-
 @RestController("accountController")
 @RequestMapping("/account")
 @CrossOrigin(origins="*")
 public class AccountController {
-  @Autowired
+	
+	@Autowired
 	private AccountService accountService;
 
-  @GetMapping(path = "/getall", produces = MediaType.APPLICATION_JSON_VALUE)
+  	@GetMapping(path = "/getall", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Account> getall(){
 		return this.accountService.findAll() ;
 	}
@@ -67,7 +67,13 @@ public class AccountController {
 		}
 		return accounts;
 	}
-@PostMapping(path = "/new", consumes = MediaType.APPLICATION_JSON_VALUE) 
+	
+	@PostMapping(path = "/resetpass", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void resetPass(String email) {
+		
+	}
+	
+	@PostMapping(path = "/new", consumes = MediaType.APPLICATION_JSON_VALUE) 
 	public Account saveAccount(Account account) {
 		return this.accountService.saveAccount(account);
 	}
