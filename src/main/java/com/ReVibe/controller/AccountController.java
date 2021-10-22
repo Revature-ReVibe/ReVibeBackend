@@ -1,8 +1,7 @@
+
 package com.ReVibe.controller;
 
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,15 +18,9 @@ import com.ReVibe.service.AccountService;
 @RequestMapping("/account")
 @CrossOrigin(origins="*")
 public class AccountController {
-
+  @Autowired
 	private AccountService accountService;
-	
-	@Autowired
-	public AccountController(AccountService accountService) {
 
-		this.accountService = accountService;
-	}
-	
 	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Account findByUserId(int id) {
 		return this.accountService.findByUserId(id);
@@ -71,6 +64,10 @@ public class AccountController {
 		}
 		return accounts;
 	}
-
+@PostMapping(path = "/new", consumes = MediaType.APPLICATION_JSON_VALUE) 
+	public Account saveAccount(Account account) {
+		return this.accountService.saveAccount(account);
+	}
 	
 }
+

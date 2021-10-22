@@ -37,5 +37,9 @@ public class AccountService {
 	public List<Account> findBySearchName(String name) {
 		return this.accountRepository.findByNameContaining(name);
 	}
+  public Account saveAccount(Account account) {
+		return this.accountRepository.saveAccount(account);
+	}
 
 }
+

@@ -29,5 +29,8 @@ public interface AccountRepository extends JpaRepository<Account, Integer>{
 	@Query("update Account a set a.name = ?1, a.password = ?2, a.username=?3, a.profilepic=?4, where a.id= ?5")
 	void setAccountInfoByUserId(String name, String password, String username, String profilePic, Integer userId);
 	
-	
+	public default Account saveAccount(Account account) {
+		return save(account);
+	}
 }
+
