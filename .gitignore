@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+/.metadata/
+
+.DS_Store
+
