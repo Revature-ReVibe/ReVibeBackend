@@ -10,14 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ReVibe.model.Vibe;
 import com.ReVibe.service.VibeService;
 
-@RestController
+@RestController("vibeController") @RequestMapping("/vibe")
 public class VibeController {
-private VibeService vibeService;
+    private VibeService vibeService;
     
     @Autowired
     public VibeController(VibeService vibeService){
@@ -50,5 +51,5 @@ private VibeService vibeService;
     public ResponseEntity <Vibe> saveLike(@RequestBody Vibe vibe, int id){
         return new ResponseEntity<Vibe>(this.vibeService.saveLike(vibe, id), HttpStatus.CREATED);
     }
-
+    
 }
