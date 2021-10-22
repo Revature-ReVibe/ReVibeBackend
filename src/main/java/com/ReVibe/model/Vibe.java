@@ -1,15 +1,20 @@
 package com.ReVibe.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+
 
 @Entity
 @Data
@@ -18,19 +23,23 @@ import lombok.NoArgsConstructor;
 public class Vibe {
 
 	@Id
-	@Column
-	@GeneratedValue
+	@Column(name="vibeid")
 	int vibeId;
-	@ManyToOne
-	Account poster;
-	@Column
+
+	@Column(name="vibepic")
 	String vibePic;
-	@Column
+	@Column(name="vibemessage")
 	String vibeMessage;
-	@OneToMany
+	@Column(name="vibedate")
+	Date date;
+	
+	@ManyToOne
+	Account poster;	
+	@OneToMany @OrderColumn
 	Account[] likes;
 	@ManyToOne
 	Vibe parentVibe;
 	
 	
+			
 }
