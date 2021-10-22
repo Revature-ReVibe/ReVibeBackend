@@ -1,3 +1,4 @@
+
 package com.ReVibe.model;
 
 import java.util.ArrayList;
@@ -48,3 +49,4 @@ public class Account {
 	private List<Comment> comment;
 
 }
+
