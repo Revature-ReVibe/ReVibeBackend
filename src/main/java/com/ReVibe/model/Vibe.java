@@ -1,5 +1,7 @@
 package com.ReVibe.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,8 @@ import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+
 
 @Entity
 @Data
@@ -26,6 +30,8 @@ public class Vibe {
 	String vibePic;
 	@Column
 	String vibeMessage;
+	@Column
+	Date date;
 	
 	@ManyToOne
 	Account poster;	
