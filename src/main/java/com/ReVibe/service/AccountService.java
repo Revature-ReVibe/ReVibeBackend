@@ -32,7 +32,7 @@ public class AccountService {
 	}
 	
 	public void merge(Account account) {
-		this.accountRepository.setAccountInfoByUserId(account.getName(),account.getPassword(),account.getUsername(),account.getProfilePic(),account.getUserId());
+		this.accountRepository.setAccountInfoByUserId(account.getName(),account.getPassword(),account.getUsername(),account.getProfilepic(),account.getUserId());
 	}
 
 	public List<Account> findBySearchName(String name) {

@@ -19,7 +19,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Table(name="vibe")
 public class Vibe {
 
@@ -29,7 +28,7 @@ public class Vibe {
 	@Column(name = "vibename")
 	String vibeName;
 	@Column(name = "vibepic")
-  String vibePic;
+	String vibePic;
 	@ManyToOne
 	Account poster;
 	@Column(name = "vibemessage")

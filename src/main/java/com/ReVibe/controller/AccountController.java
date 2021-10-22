@@ -26,7 +26,7 @@ public class AccountController {
 
   @GetMapping(path = "/getall", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Account> getall(){
-		return this.accountService.findall() ;
+		return this.accountService.findAll() ;
 	}
   
 	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -51,8 +51,8 @@ public class AccountController {
 		if(account.getUsername()== "") {
 			account.setUsername(currentAccount.getUsername());
 		}
-		if(account.getProfilePic()== "") {
-			account.setProfilePic(currentAccount.getProfilePic());
+		if(account.getProfilepic()== "") {
+			account.setProfilepic(currentAccount.getProfilepic());
 		}
 		this.accountService.merge(account);
 	}
