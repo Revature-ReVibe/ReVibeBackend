@@ -15,14 +15,14 @@ public interface AccountRepository extends JpaRepository<Account, Integer>{
 	@Query("select name, username, profilepic from Account where Account.id = ?1")
 	public Account findByUserId(int id);
 
-	@Query("select name, username, profilepic from Account")
-	public List<Account> findAll();
+//	@Query("select name, username, profilepic from Account")
+//	public List<Account> findAll();
 	
 	@Query("select name, username, profilepic from Account where Account.name = ?1")
 	public Account findByName(String name);
 	
-	@Query("select name, username, profilepic from Account where Account.name like ?1")
-	public List<Account> findByNameContaining(String name);
+//	@Query("select name, username, profilepic from Account where Account.name like ?1")
+//	public List<Account> findByNameContaining(String name);
 	
 	@Modifying
 	@Query("update Account a set a.name = ?1, a.password = ?2, a.username=?3, a.profilepic=?4, where a.id= ?5")

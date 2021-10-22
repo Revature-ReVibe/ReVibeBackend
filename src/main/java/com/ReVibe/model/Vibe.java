@@ -1,5 +1,6 @@
 package com.ReVibe.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,30 +22,31 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="vibe")
+@Table(name = "vibe")
 public class Vibe {
 
 	@Id
 	@Column(name = "vibeid")
-	int vibeId;
-	@Column(name = "vibename")
-	String vibeName;
+	private int vibeId;
+
 	@Column(name = "vibepic")
-	String vibePic;
-	@ManyToOne
-	Account poster;
+	private String vibePic;
+
 	@Column(name = "vibemessage")
-	String vibeMessage;
+	private String vibeMessage;
 	@Column(name = "vibelike")
-	int vibeLike;
+	private int vibeLike;
 	@OneToMany
-	@JoinColumn(name = "commentid")
-	List<Comment> comments;
-	@OneToMany
-	Account[] likes;
-	@ManyToOne
-	Vibe parentVibe;
+	@JoinColumn(name = "likeid")
+	private List<Like> likes;
 	@Column(name = "accountid")
-	int accountid;
+	private int accountid;
+	@Column(name = "parentvibe")
+	private int parentVibe;
 	
+	@Column(name = "vibetimestamp")
+	Date date;
+
+	@Transient
+	private List<Vibe> replyVibes;
 }

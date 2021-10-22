@@ -21,8 +21,11 @@ import com.ReVibe.service.AccountService;
 @RequestMapping("/account")
 @CrossOrigin(origins="*")
 public class AccountController {
-  @Autowired
 	private AccountService accountService;
+	@Autowired
+	public AccountController(AccountService accountService) {
+		this.accountService = accountService;
+	}
 
   @GetMapping(path = "/getall", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Account> getall(){
@@ -49,24 +52,24 @@ public class AccountController {
 			account.setPassword(currentAccount.getPassword());
 		}
 		if(account.getUsername()== "") {
-			account.setUsername(currentAccount.getUsername());
+			account.setUsername(currentAccount.getUsername());  
 		}
-		if(account.getProfilepic()== "") {
-			account.setProfilepic(currentAccount.getProfilepic());
+		if(account.getProfilePic()== "") {
+			account.setProfilePic(currentAccount.getProfilePic());
 		}
 		this.accountService.merge(account);
 	}
 	
-	@GetMapping(path="/searchaccounts", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public List<Account> searchAccounts(String name){
-		
-		List<Account> accounts = this.accountService.findBySearchName(name);
-		for(int i=0; i< accounts.size(); i++) {
-			accounts.get(i).setUsername(null);
-			accounts.get(i).setPassword(null);
-		}
-		return accounts;
-	}
+//	@GetMapping(path="/searchaccounts", consumes = MediaType.APPLICATION_JSON_VALUE)
+//	public List<Account> searchAccounts(String name){
+//		
+//		List<Account> accounts = this.accountService.findBySearchName(name);
+//		for(int i=0; i< accounts.size(); i++) {
+//			accounts.get(i).setUsername(null);
+//			accounts.get(i).setPassword(null);
+//		}
+//		return accounts;
+//	}
 @PostMapping(path = "/new", consumes = MediaType.APPLICATION_JSON_VALUE) 
 	public Account saveAccount(Account account) {
 		return this.accountService.saveAccount(account);
