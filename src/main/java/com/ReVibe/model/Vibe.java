@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,20 +23,19 @@ import lombok.NoArgsConstructor;
 public class Vibe {
 
 	@Id
-	@Column
-	@GeneratedValue
+	@Column(name="vibeid")
 	int vibeId;
 
-	@Column
+	@Column(name="vibepic")
 	String vibePic;
-	@Column
+	@Column(name="vibemessage")
 	String vibeMessage;
-	@Column
+	@Column(name="vibedate")
 	Date date;
 	
 	@ManyToOne
 	Account poster;	
-	@OneToMany
+	@OneToMany @OrderColumn
 	Account[] likes;
 	@ManyToOne
 	Vibe parentVibe;
