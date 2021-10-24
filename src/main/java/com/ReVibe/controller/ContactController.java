@@ -1,5 +1,6 @@
-package com.acechat.controller;
+package com.ReVibe.controller;
 
+//These go in application.properties:
 //spring.mail.host=smtp.gmail.com
 //spring.mail.port=587
 //spring.mail.username=ReVibeNov5@gmail.com
@@ -34,6 +35,7 @@ public class ContactController {
 	
 	@PostMapping("/contact")
 	public String submitContact(HttpServletRequest request) {
+		
 		String fullname = request.getParameter("fullname");
 		String email = request.getParameter("email");
 		String subject = request.getParameter("subject");
@@ -53,12 +55,8 @@ public class ContactController {
 		message.setSubject(mailSubject);
 		message.setText(mailContent);
 		
-		System.out.println("inside contact controller");
-		
 		mailSender.send(message);
-		
-		
-		
+	
 		return "message";
 	}
 }
