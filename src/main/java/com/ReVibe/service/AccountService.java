@@ -43,6 +43,15 @@ public class AccountService {
 		return this.accountRepository.saveAccount(account);
 	}
 
+	public Account findByUsernameAndPassword(String username, String password) {
+		Account user = this.accountRepository.findByUsernameAndPassword(username, password);
+		if (user == null) {
+			return null; 
+			
+		}
+		else
+			return user;
+	}
 
 }
 
