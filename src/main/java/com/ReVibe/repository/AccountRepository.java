@@ -12,21 +12,20 @@ import org.springframework.data.jpa.repository.Query;
 public interface AccountRepository extends JpaRepository<Account, Integer>{
 	public<S extends Account>S save(S account);
 		
-	@Query("select name, username, email, profilepic from account where Account.accountid = :1")
+	
 	public Account findByUserId(int id);
 
-	@Query("select name, username, email, profilepic from Account")
+	
 	public List<Account> findAll();
 	
-	@Query("select name, username, email, profilepic from account where Account.name = :1")
+	
 	public Account findByName(String name);
 	
-	@Query("select name, username,email, profilepic from Account where Account.name = :1")
+	
 	public List<Account> findByNameContaining(String name);
 	
-	@Modifying
-	@Query("update Account a set name = :1, a.password = :2, a.username=:3, a.profilepic=:4, where a.id= :5")
-	void setAccountInfoByUserId(String name, String password, String username, String profilePic, Integer userId);
+	
+//	void setAccountInfoByUserId(String name, String password, String username, String profilePic, int userId);
 	
 	public default Account saveAccount(Account account) {
 		return save(account);

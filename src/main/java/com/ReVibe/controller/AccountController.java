@@ -26,7 +26,7 @@ public class AccountController {
 	public AccountController(AccountService accountService) {
 		this.accountService = accountService;
 
-
+	}
 
   	@GetMapping(path = "/getall", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Account> getall(){
@@ -43,23 +43,23 @@ public class AccountController {
 		return this.accountService.findByName(name);
 	}
 	
-	@PostMapping(path="/updateprofile", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void updateprofile(@RequestBody Account account) {
-		Account currentAccount = this.accountService.findByUserId(account.getUserId());
-		if(account.getName() == "") {
-			account.setName(currentAccount.getName());
-		}
-		if(account.getPassword()== "") {
-			account.setPassword(currentAccount.getPassword());
-		}
-		if(account.getUsername()== "") {
-			account.setUsername(currentAccount.getUsername());  
-		}
-		if(account.getProfilePic()== "") {
-			account.setProfilePic(currentAccount.getProfilePic());
-		}
-		this.accountService.merge(account);
-	}
+//	@PostMapping(path="/updateprofile", consumes = MediaType.APPLICATION_JSON_VALUE)
+//	public void updateprofile(@RequestBody Account account) {
+//		Account currentAccount = this.accountService.findByUserId(account.getUserId());
+//		if(account.getName() == "") {
+//			account.setName(currentAccount.getName());
+//		}
+//		if(account.getPassword()== "") {
+//			account.setPassword(currentAccount.getPassword());
+//		}
+//		if(account.getUsername()== "") {
+//			account.setUsername(currentAccount.getUsername());  
+//		}
+//		if(account.getProfilePic()== "") {
+//			account.setProfilePic(currentAccount.getProfilePic());
+//		}
+//		this.accountService.merge(account);
+//	}
 	
 
 	@GetMapping(path="/searchaccounts", consumes = MediaType.APPLICATION_JSON_VALUE)

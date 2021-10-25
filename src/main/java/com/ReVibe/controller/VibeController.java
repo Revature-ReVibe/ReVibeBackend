@@ -25,10 +25,10 @@ public class VibeController {
         this.vibeService = vibeService;
     }
     
-    @PostMapping(path="/create", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity <Vibe> save(@RequestBody Vibe vibe){
-        return new ResponseEntity<Vibe>(this.vibeService.save(vibe), HttpStatus.CREATED);
-    }
+//    @PostMapping(path="/create", consumes=MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity <Vibe> save(@RequestBody Vibe vibe){
+//        return new ResponseEntity<Vibe>(this.vibeService.save(vibe), HttpStatus.CREATED);
+//    }
     
     
     @GetMapping(path="/find/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
