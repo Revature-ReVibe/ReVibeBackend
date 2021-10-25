@@ -23,25 +23,35 @@ public class AccountService {
 		return this.accountRepository.findByUserId(id);
 	}
 
-//	public List<Account> findAll(){
-//		return this.accountRepository.findAll();
-//	}
+		public List<Account> findAll(){
+		return this.accountRepository.findAll();
+	}
 
 	public Account findByName(String name) {
 		return this.accountRepository.findByName(name);
 	}
 	
 	public void merge(Account account) {
-		this.accountRepository.setAccountInfoByUserId(account.getName(),account.getPassword(),account.getUsername(),account.getProfilePic(),account.getUserId());
+//		this.accountRepository.setAccountInfoByUserId(account.getName(),account.getPassword(),account.getUsername(),account.getProfilePic(),account.getUserId());
 	}
 
-//	public List<Account> findBySearchName(String name) {
-//		return this.accountRepository.findByNameContaining(name);
-//	}
-  public Account saveAccount(Account account) {
+	public List<Account> findBySearchName(String name) {
+		return this.accountRepository.findByNameContaining(name);
+	}
+
+	public Account saveAccount(Account account) {
 		return this.accountRepository.saveAccount(account);
 	}
 
+	public Account findByUsernameAndPassword(String username, String password) {
+		Account user = this.accountRepository.findByUsernameAndPassword(username, password);
+		if (user == null) {
+			return null; 
+			
+		}
+		else
+			return user;
+	}
 
 }
 
