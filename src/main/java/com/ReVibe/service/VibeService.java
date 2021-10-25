@@ -29,7 +29,15 @@ public class VibeService {
     
     public List<Vibe> findAll(){
         return vibeRepository.findAll();
+        
     }
+
+	public Vibe saveLike(Vibe vibe, int parentId) {
+    	//Working on likes
+		//vibe.getLikes() (findById(parentId));
+    	//return vibeRepository.save(vibe);
+		return null;
+	}
     
     
 //    public List<Vibe> findByPoster(Vibe poster){
