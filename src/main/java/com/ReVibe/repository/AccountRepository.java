@@ -23,10 +23,9 @@ public interface AccountRepository extends JpaRepository<Account, Integer>{
 	
 	public List<Account> findByNameContaining(String name);
 	
-//	@Modifying
-//	@Query("update Account a set a.name = ?1, a.password = ?2, a.username=?3, a.profilepic=?4, where a.userId= ?5")
-
-//	void setAccountInfoByUserId(String name, String password, String username, String profilePic, int userId);
+	@Modifying
+	@Query("update Account a set a.name = ?1, a.password = ?2, a.username=?3,a.profilePic=?4 where a.userId= ?5")
+	void setAccountInfoByUserId(String name, String password, String username,String profilepic, Integer userId);
 	
 	public default Account saveAccount(Account account) {
 		return save(account);
