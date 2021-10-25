@@ -7,14 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ReVibe.model.Account;
 import com.ReVibe.service.AccountService;
+import com.ReVibe.service.JwtService;
+
+import io.jsonwebtoken.Claims;
 
 @RestController("accountController")
 @RequestMapping("/account")
@@ -34,8 +37,9 @@ public class AccountController {
 		return this.accountService.findAll() ;
 	}
   
-	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Account findByUserId(int id) {
+	@GetMapping(path = "/findbyId", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Account findByUserId(@RequestHeader("Authorization") String jwt) {
+		int id = (int) JwtService.decodeJWT(jwt).get("sub");
 		return this.accountService.findByUserId(id);
 	}
 
@@ -44,23 +48,26 @@ public class AccountController {
 		return this.accountService.findByName(name);
 	}
 	
-//	@PostMapping(path="/updateprofile", consumes = MediaType.APPLICATION_JSON_VALUE)
-//	public void updateprofile(@RequestBody Account account) {
-//		Account currentAccount = this.accountService.findByUserId(account.getUserId());
-//		if(account.getName() == "") {
-//			account.setName(currentAccount.getName());
-//		}
-//		if(account.getPassword()== "") {
-//			account.setPassword(currentAccount.getPassword());
-//		}
-//		if(account.getUsername()== "") {
-//			account.setUsername(currentAccount.getUsername());  
-//		}
-//		if(account.getProfilePic()== "") {
-//			account.setProfilePic(currentAccount.getProfilePic());
-//		}
-//		this.accountService.merge(account);
-//	}
+
+	@PostMapping(path="/updateprofile", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void updateprofile(@RequestHeader("Authorization") String jwt) {
+		Account account = findByUserId(jwt);
+		Account currentAccount = this.accountService.findByUserId(account.getUserId());
+		if(account.getName() == "") {
+			account.setName(currentAccount.getName());
+		}
+		if(account.getPassword()== "") {
+			account.setPassword(currentAccount.getPassword());
+		}
+		if(account.getUsername()== "") {
+			account.setUsername(currentAccount.getUsername());  
+		}
+		if(account.getProfilePic()== "") {
+			account.setProfilePic(currentAccount.getProfilePic());
+		}
+		this.accountService.merge(account);
+	}
+
 	
 
 	@GetMapping(path="/searchaccounts", consumes = MediaType.APPLICATION_JSON_VALUE)
