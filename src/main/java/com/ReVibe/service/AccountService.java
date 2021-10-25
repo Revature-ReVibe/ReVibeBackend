@@ -23,9 +23,9 @@ public class AccountService {
 		return this.accountRepository.findByUserId(id);
 	}
 
-	public List<Account> findAll(){
-		return this.accountRepository.findAll();
-	}
+//	public List<Account> findAll(){
+//		return this.accountRepository.findAll();
+//	}
 
 	public Account findByName(String name) {
 		return this.accountRepository.findByName(name);

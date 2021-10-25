@@ -27,10 +27,10 @@ public class AccountController {
 		this.accountService = accountService;
 	}
 
-  @GetMapping(path = "/getall", produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Account> getall(){
-		return this.accountService.findAll() ;
-	}
+//  @GetMapping(path = "/getall", produces = MediaType.APPLICATION_JSON_VALUE)
+//	public List<Account> getall(){
+//		return this.accountService.findAll() ;
+//	}
   
 	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Account findByUserId(int id) {
