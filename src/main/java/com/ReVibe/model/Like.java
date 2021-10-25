@@ -22,8 +22,8 @@ public class Like {
 	@Column(name = "likeid")
 	int likeId;
 	@Column(name = "vibeid")
-	int userId;
-	@Column(name = "accountid")
 	int vibeId;
+	@Column(name = "accountid")
+	int userId;
 	
 }
