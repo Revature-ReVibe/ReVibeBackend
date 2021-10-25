@@ -23,7 +23,11 @@ public class AccountService {
 		return this.accountRepository.findByUserId(id);
 	}
 
+
+	
+
 		public List<Account> findAll(){
+
 		return this.accountRepository.findAll();
 	}
 
@@ -31,15 +35,25 @@ public class AccountService {
 		return this.accountRepository.findByName(name);
 	}
 	
+
+//	public void merge(Account account) {
+//		this.accountRepository.setAccountInfoByUserId(account.getName(),account.getPassword(),account.getUsername(),account.getProfilePic(),account.getUserId());
+//	}
+
 	public void merge(Account account) {
 //		this.accountRepository.setAccountInfoByUserId(account.getName(),account.getPassword(),account.getUsername(),account.getProfilePic(),account.getUserId());
 	}
+
 
 	public List<Account> findBySearchName(String name) {
 		return this.accountRepository.findByNameContaining(name);
 	}
 
+ 
+
+
 	public Account saveAccount(Account account) {
+
 		return this.accountRepository.saveAccount(account);
 	}
 

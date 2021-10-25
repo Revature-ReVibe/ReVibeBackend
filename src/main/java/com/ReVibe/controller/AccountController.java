@@ -30,7 +30,7 @@ public class AccountController {
 		this.accountService = accountService;
 	}
 
-
+	
 
   	@GetMapping(path = "/getall", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Account> getall(){
@@ -48,6 +48,7 @@ public class AccountController {
 		return this.accountService.findByName(name);
 	}
 	
+
 	@PostMapping(path="/updateprofile", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void updateprofile(@RequestHeader("Authorization") String jwt) {
 		Account account = findByUserId(jwt);
@@ -66,6 +67,7 @@ public class AccountController {
 		}
 		this.accountService.merge(account);
 	}
+
 	
 
 	@GetMapping(path="/searchaccounts", consumes = MediaType.APPLICATION_JSON_VALUE)
