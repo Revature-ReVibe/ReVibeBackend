@@ -20,8 +20,8 @@ import com.ReVibe.service.AccountService;
 
 import io.jsonwebtoken.Claims;
 
-@CrossOrigin
-@RequestMapping("/users")
+@CrossOrigin(origins = "http://localhost:4200/")
+
 @RestController 
 public class AccountController {
 	

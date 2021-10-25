@@ -1,4 +1,4 @@
-package com.ReVibe.accountTest;
+package com.ReVibe.ReVibe.accountTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
@@ -43,14 +43,4 @@ public class TestAccountService {
 		mockMvc = MockMvcBuilders.standaloneSetup(accountService).build();
 	}
 	
-	@Test
-	public void testSave() {
-		Mockito.when(accountRepository.saveAccount(new Account(1, "KCastillo", "p4ssword", "Kevin Castillo")))
-		.thenReturn(new Account(1, "KCastillo", "p4ssword", "Kevin Castillo"));
-		
-		Account account = accountService.saveAccount(new Account(1, "KCastillo", "p4ssword", "Kevin Castillo"));
-		
-		assertThat(account).isNotNull();
-		verify(accountRepository, times(1)).save(account);
-	}
 }
