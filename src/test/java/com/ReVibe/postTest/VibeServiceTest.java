@@ -1,13 +1,17 @@
-package com.ReVibe.service;
+package com.ReVibe.postTest;
 
 import com.ReVibe.model.Vibe;
 import com.ReVibe.repository.VibeRepository;
+import com.ReVibe.service.VibeService;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -35,12 +39,11 @@ public class VibeServiceTest {
     public void testSave() {
         System.out.println("save");
         Vibe vibe = null;
-        VibeService instance = null;
-        Vibe expResult = null;
-        Vibe result = instance.save(vibe);
+        Vibe expResult = vibe;
+        
+        Mockito.when(vibeRepository.save(vibe)).thenReturn(vibe);
+        Vibe result = vibeService.save(vibe);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -50,12 +53,12 @@ public class VibeServiceTest {
     public void testFindById() {
         System.out.println("findById");
         int id = 0;
-        VibeService instance = null;
-        Vibe expResult = null;
-        Vibe result = instance.findById(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        Vibe vibe = null;
+        Optional<Vibe> vibeOp = Optional.of(vibe);
+        Mockito.when(vibeRepository.findById(id)).thenReturn(vibeOp);
+        Vibe result = vibeService.findById(id);
+        assertEquals(vibeOp.get(), result);
     }
 
     /**
@@ -64,12 +67,15 @@ public class VibeServiceTest {
     @Test
     public void testFindAll() {
         System.out.println("findAll");
-        VibeService instance = null;
-        List<Vibe> expResult = null;
-        List<Vibe> result = instance.findAll();
+        Vibe vibe1 = null;
+        Vibe vibe2 = null;
+        List<Vibe> expResult = new ArrayList<>();
+        expResult.add(vibe1);
+        expResult.add(vibe2);
+        Mockito.when(vibeRepository.findAll()).thenReturn(expResult);
+        
+        List<Vibe> result = vibeService.findAll();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }
