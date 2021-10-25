@@ -25,6 +25,7 @@ public class AccountController {
 	@Autowired
 	public AccountController(AccountService accountService) {
 		this.accountService = accountService;
+	}
 
 
 
