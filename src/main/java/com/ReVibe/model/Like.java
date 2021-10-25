@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.ReVibe.controller.LoginController;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

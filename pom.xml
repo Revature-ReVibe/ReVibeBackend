@@ -35,10 +35,7 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>5.4.16.Final</version>
       </dependency> 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+		
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -73,6 +70,14 @@
 	  <type>jar</type>
 	 </dependency>
 	 <dependency>
+<<<<<<< HEAD
+=======
+    		<groupId>com.amazonaws</groupId>
+    		<artifactId>aws-java-sdk-s3</artifactId>
+    		<version>1.12.86</version>
+		</dependency>
+		<dependency>
+>>>>>>> 7ff95a110a98ccf3d3146255ae9d0d2a130be134
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
