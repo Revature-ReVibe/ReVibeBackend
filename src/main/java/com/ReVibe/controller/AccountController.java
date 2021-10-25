@@ -16,15 +16,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ReVibe.model.Account;
 import com.ReVibe.service.AccountService;
 
-
 @RestController("accountController")
 @RequestMapping("/account")
 @CrossOrigin(origins="*")
 public class AccountController {
-  @Autowired
-	private AccountService accountService;
 
-  @GetMapping(path = "/getall", produces = MediaType.APPLICATION_JSON_VALUE)
+	private AccountService accountService;
+	@Autowired
+	public AccountController(AccountService accountService) {
+		this.accountService = accountService;
+	}
+
+
+
+  	@GetMapping(path = "/getall", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Account> getall(){
 		return this.accountService.findAll() ;
 	}
@@ -49,14 +54,15 @@ public class AccountController {
 			account.setPassword(currentAccount.getPassword());
 		}
 		if(account.getUsername()== "") {
-			account.setUsername(currentAccount.getUsername());
+			account.setUsername(currentAccount.getUsername());  
 		}
-		if(account.getProfilepic()== "") {
-			account.setProfilepic(currentAccount.getProfilepic());
+		if(account.getProfilePic()== "") {
+			account.setProfilePic(currentAccount.getProfilePic());
 		}
 		this.accountService.merge(account);
 	}
 	
+
 	@GetMapping(path="/searchaccounts", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public List<Account> searchAccounts(String name){
 		
@@ -67,7 +73,13 @@ public class AccountController {
 		}
 		return accounts;
 	}
-@PostMapping(path = "/new", consumes = MediaType.APPLICATION_JSON_VALUE) 
+	
+	@PostMapping(path = "/resetpass", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void resetPass(String email) {
+		
+	}
+	
+	@PostMapping(path = "/new", consumes = MediaType.APPLICATION_JSON_VALUE) 
 	public Account saveAccount(Account account) {
 		return this.accountService.saveAccount(account);
 	}
