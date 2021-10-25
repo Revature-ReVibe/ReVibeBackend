@@ -41,15 +41,11 @@ public class JwtController {
 	
 	@GetMapping("/authenticate")
 	public Boolean isLoggedIn(@RequestHeader("Authorization") String jwt) {
-		System.out.println("endpoint hit... jwt:" + jwt);
 		Claims claim = JwtService.decodeJWT(jwt);
 		if(claim.getIssuer().equals("ReViveBackend")) {
-			System.out.println(claim);
-			System.out.println(claim.get("sub"));
 			return true;
 		}
 		return false;
 	}
-
 	
 }
