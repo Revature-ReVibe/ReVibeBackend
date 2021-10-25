@@ -27,7 +27,7 @@ public class AccountController {
 		this.accountService = accountService;
 	}
 
-	}
+	
 
   	@GetMapping(path = "/getall", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Account> getall(){

@@ -23,11 +23,11 @@ public class AccountService {
 		return this.accountRepository.findByUserId(id);
 	}
 
-<<<<<<< HEAD
-	public List<Account> findAll(){
-=======
+
+	
+
 		public List<Account> findAll(){
->>>>>>> 7ff95a110a98ccf3d3146255ae9d0d2a130be134
+
 		return this.accountRepository.findAll();
 	}
 
@@ -35,25 +35,25 @@ public class AccountService {
 		return this.accountRepository.findByName(name);
 	}
 	
-<<<<<<< HEAD
+
 //	public void merge(Account account) {
 //		this.accountRepository.setAccountInfoByUserId(account.getName(),account.getPassword(),account.getUsername(),account.getProfilePic(),account.getUserId());
 //	}
-=======
+
 	public void merge(Account account) {
 //		this.accountRepository.setAccountInfoByUserId(account.getName(),account.getPassword(),account.getUsername(),account.getProfilePic(),account.getUserId());
 	}
->>>>>>> 7ff95a110a98ccf3d3146255ae9d0d2a130be134
+
 
 	public List<Account> findBySearchName(String name) {
 		return this.accountRepository.findByNameContaining(name);
 	}
-<<<<<<< HEAD
-  public Account saveAccount(Account account) {
-=======
+
+ 
+
 
 	public Account saveAccount(Account account) {
->>>>>>> 7ff95a110a98ccf3d3146255ae9d0d2a130be134
+
 		return this.accountRepository.saveAccount(account);
 	}
 

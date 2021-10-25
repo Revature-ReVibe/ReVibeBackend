@@ -7,10 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-<<<<<<< HEAD
-import javax.persistence.ManyToOne;
-=======
->>>>>>> 7ff95a110a98ccf3d3146255ae9d0d2a130be134
+
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -54,4 +51,3 @@ public class Vibe {
 	private List<Vibe> replyVibes;
 }
 
-}

@@ -8,11 +8,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VibeRepository extends JpaRepository<Vibe, Integer>{
-<<<<<<< HEAD
-//    List<Vibe> findByParentVibe(Vibe parentVibe);
-//    List<Vibe> findByPoster(Account user);
-=======
+
     List<Vibe> findByParentVibe(Vibe parentVibe);
     List<Vibe> findByAccountid(Account user);
->>>>>>> 7ff95a110a98ccf3d3146255ae9d0d2a130be134
+
 }
