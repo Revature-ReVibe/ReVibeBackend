@@ -12,6 +12,9 @@ import org.springframework.data.jpa.repository.Query;
 public interface AccountRepository extends JpaRepository<Account, Integer>{
 	public<S extends Account>S save(S account);
 
+		
+	
+
 	public Account findByUserId(int id);
 	
 	public List<Account> findAll();
@@ -22,6 +25,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer>{
 	
 //	@Modifying
 //	@Query("update Account a set a.name = ?1, a.password = ?2, a.username=?3, a.profilepic=?4, where a.userId= ?5")
+
 //	void setAccountInfoByUserId(String name, String password, String username, String profilePic, int userId);
 	
 	public default Account saveAccount(Account account) {
