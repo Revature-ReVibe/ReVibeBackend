@@ -20,9 +20,13 @@ import com.ReVibe.service.AccountService;
 @RequestMapping("/account")
 @CrossOrigin(origins="*")
 public class AccountController {
-	
-	@Autowired
+
 	private AccountService accountService;
+	@Autowired
+	public AccountController(AccountService accountService) {
+		this.accountService = accountService;
+
+
 
   	@GetMapping(path = "/getall", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Account> getall(){
@@ -49,14 +53,15 @@ public class AccountController {
 			account.setPassword(currentAccount.getPassword());
 		}
 		if(account.getUsername()== "") {
-			account.setUsername(currentAccount.getUsername());
+			account.setUsername(currentAccount.getUsername());  
 		}
-		if(account.getProfilepic()== "") {
-			account.setProfilepic(currentAccount.getProfilepic());
+		if(account.getProfilePic()== "") {
+			account.setProfilePic(currentAccount.getProfilePic());
 		}
 		this.accountService.merge(account);
 	}
 	
+
 	@GetMapping(path="/searchaccounts", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public List<Account> searchAccounts(String name){
 		

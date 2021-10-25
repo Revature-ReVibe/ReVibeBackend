@@ -40,13 +40,13 @@ public class Account {
 	@Column(name = "email")
 	String email;
 	@Column(name = "profilepic")
-	String profilepic;
+	String profilePic;
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name="accountid")
 	private List<Vibe> vibe;;
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name="accountid")
-	private List<Comment> comment;
+	private List<Like> likes;
 
 }
 

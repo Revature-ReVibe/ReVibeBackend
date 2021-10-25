@@ -36,17 +36,23 @@ public class VibeController {
         return new ResponseEntity<Vibe>(this.vibeService.findById(id), HttpStatus.OK);
     }
     
-    @GetMapping(path="/all", produces=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Vibe>> findAll(){
-    	
-        return new ResponseEntity<List<Vibe>>(this.vibeService.findAll(), HttpStatus.OK);
-    }
     
-    @PostMapping(path="/createReply", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity <Vibe> saveReply(@RequestBody Vibe vibe, int id){
-        return new ResponseEntity<Vibe>(this.vibeService.saveReply(vibe, id), HttpStatus.CREATED);
-    }
+
+//    
+//    @GetMapping(path="/all", produces=MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<List<Vibe>> findAll(){
+//    	
+//        return new ResponseEntity<List<Vibe>>(this.vibeService.findAll(), HttpStatus.OK);
+//    }
     
+
+//    @PostMapping(path="/createReply", consumes=MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity <Vibe> saveReply(@RequestBody Vibe vibe, int id){
+//        return new ResponseEntity<Vibe>(this.vibeService.saveReply(vibe, id), HttpStatus.CREATED);
+//    }
+  
+
+
     @PostMapping(path="/createLike", consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity <Vibe> saveLike(@RequestBody Vibe vibe, int id){
         return new ResponseEntity<Vibe>(this.vibeService.saveLike(vibe, id), HttpStatus.CREATED);

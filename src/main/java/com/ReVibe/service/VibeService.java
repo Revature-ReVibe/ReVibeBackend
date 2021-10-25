@@ -13,15 +13,15 @@ public class VibeService {
         this.vibeRepository = vibeRepository;
     }
     
-    public Vibe save(Vibe vibe){
-    	vibe.setParentVibe(vibe);
-        return vibeRepository.save(vibe);
-    }
-    
-    public Vibe saveReply(Vibe vibeReply, int parentId) {	
-    	vibeReply.setParentVibe(findById(parentId));
-    	return vibeRepository.save(vibeReply);
-    }
+//    public Vibe save(Vibe vibe){
+//    	vibe.setParentVibe(vibe);
+//        return vibeRepository.save(vibe);
+//    }
+//    
+//    public Vibe saveReply(Vibe vibeReply, int parentId) {	
+//    	vibeReply.setParentVibe(findById(parentId));
+//    	return vibeRepository.save(vibeReply);
+//    }
     
     public Vibe findById(int id){
         return vibeRepository.findById(id).get();

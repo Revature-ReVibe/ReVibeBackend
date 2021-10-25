@@ -1,6 +1,7 @@
 
-Insert into account (username, name, password, email) values ('ayankosk', 'Alex', 'root', 'a@rev'),
+Insert into account (username, name, password, email) values ('firstUser', 'first', 'root', 'a@rev.com'),
 ('secondUser', 'second', 'toor', 'second@gmail.co');
-Insert into vibe (vibename, vibepic, vibemessage, vibelike, accountid) values ('vibe', 'picture', 'vibemessage', 0, 1);
-Insert into comments(message, vibeid,accountid) values ('testing', 1, 1);
+Insert into vibe (vibepic, vibemessage, accountid, parentvibe, vibetimestamp) values ('picture', 'vibemessage', 1, null, null);
+Insert into vibe (vibepic, vibemessage, accountid, parentvibe, vibetimestamp) values ('picture2', 'vibemessage2', 2, 1, null);
+Insert into liketable(vibeid,accountid) values (1, 1);
 
