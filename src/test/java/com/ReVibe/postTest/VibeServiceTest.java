@@ -35,16 +35,16 @@ public class VibeServiceTest {
     /**
      * Test of save method, of class VibeService.
      */
-    @Test
-    public void testSave() {
-        System.out.println("save");
-        Vibe vibe = null;
-        Vibe expResult = vibe;
-        
-        Mockito.when(vibeRepository.save(vibe)).thenReturn(vibe);
-        Vibe result = vibeService.save(vibe);
-        assertEquals(expResult, result);
-    }
+//    @Test
+//    public void testSave() {
+//        System.out.println("save");
+//        Vibe vibe = null;
+//        Vibe expResult = vibe;
+//        
+//        Mockito.when(vibeRepository.save(vibe)).thenReturn(vibe);
+//        Vibe result = vibeService.save(vibe);
+//        assertEquals(expResult, result);
+//    }
 
     /**
      * Test of findById method, of class VibeService.

@@ -25,6 +25,7 @@ public class VibeController {
         this.vibeService = vibeService;
     }
     
+
     @PostMapping(path="/createVibe", consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity <Vibe> save(@RequestBody Vibe vibe){
     	
