@@ -1,10 +1,11 @@
-
 package com.ReVibe.service;
 
 import java.security.Key;
-import java.util.Date;
+import java.sql.Date;
+import java.util.List;
 
 import javax.crypto.spec.SecretKeySpec;
+import javax.transaction.Transactional;
 import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,20 +18,77 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Service @Slf4j 
+@Transactional
+@Service @Slf4j
 public class AccountService {
-
+	
 	private AccountRepository accountRepository;
-
+	
 	@Autowired
 	public AccountService(AccountRepository accountRepository) {
 		this.accountRepository = accountRepository;
-		
 	}
-		
+	
+	public Account findByUserId(int id) {
+		log.info("find user id {} in Database", id);
+		return this.accountRepository.findByUserId(id);
+	}
+
+
+	public List<Account> findAll(){
+		log.info("find all users");
+		return this.accountRepository.findAll();
+	}
+
+	public Account findByName(String name) {
+		log.info("find {} in Database", name);
+		return this.accountRepository.findByName(name);
+	}
+	
+
+	public void merge(Account account) {
+		log.info("Merge {} ", account);
+		this.accountRepository.setAccountInfoByUserId(account.getName(),account.getPassword(),account.getUsername(),account.getProfilePic(),account.getEmail());
+	}
+
+
+	public List<Account> findBySearchName(String name) {
+		log.info("Search {} in Database", name);
+		return this.accountRepository.findByNameContaining(name);
+	}
+
+ 
+
+
+	public Account saveAccount(Account account) {
+		log.info("saving account {} in Database", account);
+		return this.accountRepository.saveAccount(account);
+	}
+
+	public Account findByUsernameAndPassword(String username, String password) {
+		log.info("find user {} and password{}", username, password);
+		Account user = this.accountRepository.findByUsernameAndPassword(username, password);
+		if (user == null) {
+			return null; 
+			
+		}
+		else
+			return user;
+	}
+	
+	  public Account findById(int id) { 
+		  return this.accountRepository.getById(id);
+	  
+	  }
+
+	public Account findByEmail(String email) {
+		log.info("find user by {} in Database", email);
+		return this.accountRepository.findByEmail(email);
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
     private static String SECRET_KEY = "oeRaYY7Wo24sDqKSX3IM9ASGmdGPmkTd9jo1QTy4b7P9Ze5_9hKolVX8xNrQDcNRfVEdTZNOuOyqEGhXEbdJI-ZQ19k_o9MI0y3eZN2lp9jow55FfXMiINEdt1XR85VipRLSOkT6kSpzs2x-jbLDiz9iFVzkd81YKxMgPA7VfZeQUm4n-mOmnWMaVX30zGFU4L3oPBctYKkl4dYfqYWqRNfrgPJVi5DGFjywgxx0ASEiJHtV72paI3fDR2XwlSkyhhmY-ICjCRmsJN4fX1pdoL8a18-aQrvyu4j0Os6dVPYIoPvvY0SAZtWYKHfM15g7A3HD4cVREf9cUsprCRK93w";
 	
 	public static String createJWT(String id, String issuer, String subject, long ttlMillis) {
@@ -79,25 +137,11 @@ public class AccountService {
 		this.accountRepository.save(account);
 	}
 
-	public Account findByUsername(String username) {
-		log.info("{} found in the database", username);
-		return this.accountRepository.findByUsername(username);
-	}
-
-	public Account findByUsernameAndPassword(String username, String password) {
-		Account user = this.accountRepository.findByUsernameAndPassword(username, password);
-		if (user == null) {
-			return null; 
-		}
-		else
-			return user;
-	}
-	
-	
-	  public Account findById(int id) { 
-		  return this.accountRepository.getById(id);
-	  
-	  }
+	// TODO: FOR KWAME TO FIX
+//	public Account findByUsername(String username) {
+//		log.info("{} found in the database", username);
+//		return this.accountRepository.findByUsername(username);
+//	}
 
 }
 

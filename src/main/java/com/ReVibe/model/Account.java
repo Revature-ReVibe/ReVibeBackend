@@ -1,9 +1,16 @@
 package com.ReVibe.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,19 +20,28 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-
+@Table(name = "account")
 public class Account {
-	
+
 	@Id
-	@Column
-	@GeneratedValue
+	@Column(name = "accountid")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	int userId;
-	@Column
+	@Column(name = "username")
 	String username;
-	@Column
+	@Column(name = "password")
 	String password;
-	@Column
+	@Column(name = "name")
 	String name;
-	
+	@Column(name = "email")
+	String email;
+	@Column(name = "profilepic")
+	String profilePic;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name="accountid")
+	private List<Vibe> vibe;;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name="accountid")
+	private List<Like> likes;
 
 }
