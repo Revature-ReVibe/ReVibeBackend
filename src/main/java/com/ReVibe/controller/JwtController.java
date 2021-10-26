@@ -33,7 +33,7 @@ public class JwtController {
 		account = this.accountservice.findByUsernameAndPassword(account.getUsername(), account.getPassword());
 		if(account!=null) {
 		String jwt = JwtService.createJWT(UUID.randomUUID().toString(), "ReViveBackend", String.valueOf(account.getUserId()), 600000L);
-		return new ResponseEntity<String>(jwt, HttpStatus.OK);
+		return new ResponseEntity<String>("{\"jwt\":\"" + jwt + "\"}", HttpStatus.OK);
 		}
 		return null;
 	}
@@ -46,5 +46,7 @@ public class JwtController {
 		}
 		return false;
 	}
+	
+	
 	
 }

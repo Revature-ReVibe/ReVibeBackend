@@ -22,8 +22,6 @@ import com.ReVibe.model.Account;
 import com.ReVibe.service.AccountService;
 import com.ReVibe.service.JwtService;
 
-import io.jsonwebtoken.Claims;
-
 @RestController("accountController")
 @RequestMapping("/account")
 @CrossOrigin(origins="*")
@@ -135,17 +133,4 @@ public class AccountController {
 			return new ResponseEntity<String>("Signed in", HttpStatus.OK);
 		}
 	}
-	
-	
-	@GetMapping("/authenticate")
-	public Boolean isLoggedIn(@RequestHeader("Authorization") String jwt) {
-		System.out.println("endpoint hit... jwt:" + jwt);
-		Claims claim = AccountService.decodeJWT(jwt);
-		if(claim.getIssuer().equals("ReViveBackend")) {
-			System.out.println("It Worked!!!");
-			return true;
-		}
-		return false;
-	}
 }
-

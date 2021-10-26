@@ -43,5 +43,10 @@ public class Account {
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name="accountid")
 	private List<Like> likes;
+	@Override
+	public String toString() {
+		return "Account [userId=" + userId + ", username=" + username + ", password=" + password + ", name=" + name
+				+ ", email=" + email + ", profilePic=" + profilePic + ", vibe=" + vibe + ", likes=" + likes + "]";
+	}
 
 }
