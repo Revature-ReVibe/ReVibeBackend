@@ -3,7 +3,7 @@ accountid int unsigned not null auto_increment Primary key,
 username varchar(50) not null unique,
 name varchar(100) not null,
 password varchar(50) not null,
-email varchar(150) not null,
+email varchar(150) not NULL Unique,
 profilepic varchar(200));
 
 CREATE TABLE vibe(
@@ -13,6 +13,7 @@ vibemessage varchar(300),
 accountid int unsigned not null,
 parentvibe int,
 vibetimestamp TIMESTAMP,
+vibelike int unsigned,
 Foreign key (accountid) references account(accountid));
 
 CREATE TABLE liketable(

@@ -24,10 +24,7 @@ public class AccountService {
 	}
 
 
-	
-
-		public List<Account> findAll(){
-
+	public List<Account> findAll(){
 		return this.accountRepository.findAll();
 	}
 
@@ -37,7 +34,7 @@ public class AccountService {
 	
 
 	public void merge(Account account) {
-		this.accountRepository.setAccountInfoByUserId(account.getName(),account.getPassword(),account.getUsername(),account.getProfilePic(),account.getUserId());
+		this.accountRepository.setAccountInfoByUserId(account.getName(),account.getPassword(),account.getUsername(),account.getProfilePic(),account.getEmail());
 	}
 
 
@@ -61,6 +58,10 @@ public class AccountService {
 		}
 		else
 			return user;
+	}
+
+	public Account findByEmail(String email) {
+		return this.accountRepository.findByEmail(email);
 	}
 
 }
