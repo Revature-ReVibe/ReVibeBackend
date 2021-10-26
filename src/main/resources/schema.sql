@@ -14,7 +14,6 @@ vibelike int unsigned,
 accountid int unsigned not null,
 parentvibe int,
 vibetimestamp TIMESTAMP,
-vibelike int unsigned,
 Foreign key (accountid) references account(accountid));
 
 CREATE TABLE liketable(

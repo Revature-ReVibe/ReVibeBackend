@@ -24,7 +24,6 @@ private static String SECRET_KEY = "${jwt.secret}";
         Date now = new Date(nowMillis);
 
         byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(SECRET_KEY);
-        System.out.println("byte[] = " + apiKeySecretBytes);
         
         Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
         
