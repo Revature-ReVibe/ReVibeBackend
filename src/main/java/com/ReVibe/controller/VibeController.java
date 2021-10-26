@@ -53,6 +53,7 @@ public class VibeController {
     public ResponseEntity <Vibe> like(@RequestBody Vibe vibe, int accountId){
     	
         return new ResponseEntity<Vibe>(this.vibeService.like(vibe, accountId), HttpStatus.CREATED);
+
     }
     
     @PostMapping(path="/unlike", consumes=MediaType.APPLICATION_JSON_VALUE)

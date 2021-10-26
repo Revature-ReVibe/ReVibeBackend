@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 
@@ -27,6 +29,7 @@ public class Vibe {
 
 	@Id
 	@Column(name = "vibeid")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int vibeId;
 
 	@Column(name = "vibepic")
@@ -35,14 +38,14 @@ public class Vibe {
 	@Column(name = "vibemessage")
 	private String vibeMessage;
 	@Column(name = "vibelike")
-	private int vibeLike;
+	private Integer vibeLike;
 	@OneToMany
 	@JoinColumn(name = "likeid")
 	private List<Like> likes;
 	@Column(name = "accountid")
 	private int accountid;
 	@Column(name = "parentvibe")
-	private int parentVibe;
+	private Integer parentVibe;
 	
 	@Column(name = "vibetimestamp")
 	Date date;
