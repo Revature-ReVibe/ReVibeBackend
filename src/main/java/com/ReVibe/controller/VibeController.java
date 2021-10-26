@@ -62,4 +62,8 @@ public class VibeController {
         return new ResponseEntity<Vibe>(this.vibeService.unlike(vibe, accountId), HttpStatus.CREATED);
     }
     
+    @GetMapping(path="/find/account/{account_id}", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Vibe>> findByPoster(@PathVariable int account_id){
+        return new ResponseEntity<>(this.vibeService.findByPoster(account_id), HttpStatus.OK);
+    }
 }
