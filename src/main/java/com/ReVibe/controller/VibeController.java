@@ -1,5 +1,7 @@
 package com.ReVibe.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,12 +38,12 @@ public class VibeController {
     
     
 
-//    
-//    @GetMapping(path="/all", produces=MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<List<Vibe>> findAll(){
-//    	
-//        return new ResponseEntity<List<Vibe>>(this.vibeService.findAll(), HttpStatus.OK);
-//    }
+    
+    @GetMapping(path="/all", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Vibe>> findAll(){
+    	
+        return new ResponseEntity<List<Vibe>>((List<Vibe>) this.vibeService.findAll(), HttpStatus.OK);
+    }
     
 
 //    @PostMapping(path="/createReply", consumes=MediaType.APPLICATION_JSON_VALUE)
