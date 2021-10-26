@@ -40,9 +40,6 @@ public class AccountService {
 //		this.accountRepository.setAccountInfoByUserId(account.getName(),account.getPassword(),account.getUsername(),account.getProfilePic(),account.getUserId());
 //	}
 
-	public void merge(Account account) {
-//		this.accountRepository.setAccountInfoByUserId(account.getName(),account.getPassword(),account.getUsername(),account.getProfilePic(),account.getUserId());
-	}
 
 
 	public List<Account> findBySearchName(String name) {

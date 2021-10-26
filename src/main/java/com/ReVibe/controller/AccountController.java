@@ -60,6 +60,7 @@ public class AccountController {
 //			account.setProfilePic(currentAccount.getProfilePic());
 //		}
 //		this.accountService.merge(account);
+//		
 //	}
 	
 
