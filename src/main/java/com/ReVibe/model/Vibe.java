@@ -53,4 +53,3 @@ public class Vibe {
 	@Transient
 	private List<Vibe> replyVibes;
 }
-
