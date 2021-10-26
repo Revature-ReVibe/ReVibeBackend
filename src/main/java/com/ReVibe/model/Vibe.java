@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -34,14 +35,14 @@ public class Vibe {
 	@Column(name = "vibemessage")
 	private String vibeMessage;
 	@Column(name = "vibelike")
-	private int vibeLike;
+	private Integer vibeLike;
 	@OneToMany
 	@JoinColumn(name = "likeid")
 	private List<Like> likes;
 	@Column(name = "accountid")
 	private int accountid;
 	@Column(name = "parentvibe")
-	private int parentVibe;
+	private Integer parentVibe;
 	
 	@Column(name = "vibetimestamp")
 	Date date;
