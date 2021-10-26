@@ -63,8 +63,7 @@ public class VibeService {
 		return vibe.getLikes();	
 	}
 	
-    
-//    public List<Vibe> findByPoster(Vibe poster){
-//    	return vibeRepository.findByPoster(poster.getPoster().getUserId());
-//    }
+    public List<Vibe> findByPoster(Vibe poster){
+    	return vibeRepository.findByAccountid(poster.getAccountid());
+    }
 }
