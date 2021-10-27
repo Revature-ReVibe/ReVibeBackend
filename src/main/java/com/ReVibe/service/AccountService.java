@@ -1,10 +1,13 @@
 package com.ReVibe.service;
 
+
 import java.util.List;
 
 import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.ReVibe.model.Account;
 import com.ReVibe.repository.AccountRepository;
 
@@ -37,6 +40,10 @@ public class AccountService {
 		return this.accountRepository.findByName(name);
 	}
 	
+	public Account findByUsername(String username) {
+		log.info("find {} in Database", username);
+		return this.accountRepository.findByUsername(username);
+	}
 
 	public void merge(Account account) {
 		log.info("Merge {} ", account);
@@ -49,15 +56,19 @@ public class AccountService {
 		return this.accountRepository.findByNameContaining(name);
 	}
 
+
  
 
 
+
 	public Account saveAccount(Account account) {
-		log.info("saving account {} in Database", account);
+		log.info("saving account ({}) in Database", account);
+
 		return this.accountRepository.saveAccount(account);
 	}
 
 	public Account findByUsernameAndPassword(String username, String password) {
+
 		log.info("find user {} and password{}", username, password);
 		Account user = this.accountRepository.findByUsernameAndPassword(username, password);
 		if (user == null) {
@@ -68,10 +79,36 @@ public class AccountService {
 			return user;
 	}
 
+	
+	
+	
+	  public Account findById(int id) { 
+		  return this.accountRepository.getById(id);
+	  
+	  }
+
+
 	public Account findByEmail(String email) {
 		log.info("find user by {} in Database", email);
 		return this.accountRepository.findByEmail(email);
 	}
+	
+	
+	public void setAccountRepository(AccountRepository accountRepository) {
+		this.accountRepository = accountRepository;
+	}
+
+	public void save(Account account) {
+		log.info("Saving new user ({}) to the database", account.getName());
+		this.accountRepository.save(account);
+	}
+
+	// TODO: FOR KWAME TO FIX
+//	public Account findByUsername(String username) {
+//		log.info("{} found in the database", username);
+//		return this.accountRepository.findByUsername(username);
+//	}
 
 }
+
 
