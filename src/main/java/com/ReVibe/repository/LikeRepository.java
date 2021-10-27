@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface LikeRepository extends JpaRepository<Like, Integer>{
     public List<Like> findByUserid(int userId);
     public List<Like> findByVibeid(int vibeId);
-    public List findByVibeidAndUserid(int vibeId, int userId);
+    public Like findByVibeidAndUserid(int vibeId, int userId);
 }//LikeRepository

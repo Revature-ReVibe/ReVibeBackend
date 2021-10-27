@@ -28,4 +28,9 @@ public class Like {
 	@Column(name = "accountid")
 	int userId;
 	
+        public Like(int vibeId, int userId){
+            super();
+            this.vibeId = vibeId;
+            this.userId = userId;
+        }
 }

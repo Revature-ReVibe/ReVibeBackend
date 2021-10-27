@@ -42,14 +42,16 @@ public class VibeService {
     }
 
 	public Vibe like(Vibe vibe, int accountId) {
-    	//Working on likes
-		
-		Like like = new Like();
-		
-		like.setVibeId(vibe.getVibeId());	
-		like.setUserId(accountId);
-		vibe.getLikes().add(like);
-    	return vibeRepository.save(vibe);
+	    Like like = new Like(vibe.getVibeId(), accountId);
+            Like temp = likeRepository.findByVibeidAndUserid(like.getVibeId(), like.getUserId());
+            
+            if (like == null){
+                vibe.getLikes().add(like);
+                
+            }
+            
+                
+            return vibeRepository.save(vibe);
 	}
     
 	public Vibe unlike(Vibe vibe, int accountId) {
