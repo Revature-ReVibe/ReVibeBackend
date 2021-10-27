@@ -37,13 +37,18 @@ public class AccountController {
 	
 
   	@GetMapping(path = "/getall", produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Account> getall(){
+	public List<Account> getall(@RequestHeader("Authorization") String jwt){
+  		try {
+  		int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
 		List<Account> account = this.accountService.findAll();
 		for(int i=0; i<account.size();i++) {
 			account.get(i).setUsername(null);
 			account.get(i).setPassword(null);
 		}
 		return account;
+  		}catch(java.lang.NullPointerException e) {
+  			return null;
+  		}
 	}
   
 	@GetMapping(path = "/findbyId", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -60,16 +65,23 @@ public class AccountController {
 	}
 
 	@GetMapping(path = "/name", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Account findByName(@RequestParam String name) {
+	public Account findByName(@RequestParam String name,@RequestHeader("Authorization") String jwt) {
+	  	try {
+	  	int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
 		Account account = this.accountService.findByName(name);
 		account.setUsername(null);
 		account.setPassword(null);
 		return account;
+	  	}catch(java.lang.NullPointerException e) {
+	  			return null;
+	  	}
 	}
 	
 
 	@PostMapping(path="/updateprofile", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void updateprofile(@RequestBody Account account) {
+	public boolean updateprofile(@RequestBody Account account, @RequestHeader("Authorization") String jwt) {
+		try {
+		  	int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
 		Account currentAccount = this.accountService.findByEmail(account.getEmail());
 		if(account.getName() == "") {
 			account.setName(currentAccount.getName());
@@ -84,18 +96,27 @@ public class AccountController {
 			account.setProfilePic(currentAccount.getProfilePic());
 		}
 		this.accountService.merge(account);
+		return true;
+		}catch(java.lang.NullPointerException e) {
+  			return false;
+  	}
 	}
 
 	
 
 	@GetMapping(path="/searchaccounts", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public List<Account> searchAccounts(@RequestBody Account account){
+	public List<Account> searchAccounts(@RequestBody Account account,@RequestHeader("Authorization") String jwt){
+		try {
+		  	int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
 		List<Account> accounts = this.accountService.findBySearchName(account.getName());
 		for(int i=0; i< accounts.size(); i++) {
 			accounts.get(i).setUsername(null);
 			accounts.get(i).setPassword(null);
 		}
 		return accounts;
+		}catch(java.lang.NullPointerException e) {
+  			return null;
+  	}
 	}
 	
 	@PostMapping(path = "/resetpass", consumes = MediaType.APPLICATION_JSON_VALUE)
