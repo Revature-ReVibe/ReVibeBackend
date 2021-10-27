@@ -18,6 +18,7 @@ import com.ReVibe.service.AccountService;
 import com.ReVibe.service.JwtService;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 
 @RestController
 @RequestMapping("/jwt")
@@ -29,22 +30,23 @@ public class JwtController {
 	private AccountService accountservice;
 	
 	@PostMapping("/login")
-	public ResponseEntity<String> logUserIn(@RequestBody Account account) {
+	public String logUserIn(@RequestBody Account account) {
 		account = this.accountservice.findByUsernameAndPassword(account.getUsername(), account.getPassword());
-		if(account!=null) {
-		String jwt = JwtService.createJWT(UUID.randomUUID().toString(), "ReViveBackend", String.valueOf(account.getUserId()), 600000L);
-		return new ResponseEntity<String>(jwt, HttpStatus.OK);
-		}
-		return null;
+		String jwt;
+		return  jwt = JwtService.createJWT(UUID.randomUUID().toString(), "ReViveBackend", String.valueOf(account.getUserId()), 600000L);
 	}
 	
 	@GetMapping("/authenticate")
 	public Boolean isLoggedIn(@RequestHeader("Authorization") String jwt) {
+		try {
 		Claims claim = JwtService.decodeJWT(jwt);
 		if(claim.getIssuer().equals("ReViveBackend")) {
 			return true;
+		}}catch(io.jsonwebtoken.ExpiredJwtException e) {
+			
 		}
 		return false;
 	}
 	
+
 }
