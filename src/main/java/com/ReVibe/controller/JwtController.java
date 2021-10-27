@@ -40,9 +40,12 @@ public class JwtController {
 	
 	@GetMapping("/authenticate")
 	public Boolean isLoggedIn(@RequestHeader("Authorization") String jwt) {
+		try {
 		Claims claim = JwtService.decodeJWT(jwt);
 		if(claim.getIssuer().equals("ReViveBackend")) {
 			return true;
+		}}catch(io.jsonwebtoken.ExpiredJwtException e) {
+			
 		}
 		return false;
 	}

@@ -43,11 +43,15 @@ public class AccountController {
   
 	@GetMapping(path = "/findbyId", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Account findByUserId(@RequestHeader("Authorization") String jwt) {
+		try {
 		Object id = JwtService.decodeJWT(jwt).get("sub");
 		Account account = this.accountService.findByUserId( Integer.valueOf((String)id));
 		account.setUsername(null);
 		account.setPassword(null);
 		return account;
+		}catch(io.jsonwebtoken.ExpiredJwtException e) {
+			return null;
+		}
 	}
 
 	@GetMapping(path = "/name", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -81,7 +85,6 @@ public class AccountController {
 
 	@GetMapping(path="/searchaccounts", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public List<Account> searchAccounts(@RequestBody Account account){
-		System.out.println(account.getName());
 		List<Account> accounts = this.accountService.findBySearchName(account.getName());
 		for(int i=0; i< accounts.size(); i++) {
 			accounts.get(i).setUsername(null);

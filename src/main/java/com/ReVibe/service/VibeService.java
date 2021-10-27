@@ -15,7 +15,6 @@ public class VibeService {
     }
     
     public Vibe saveVibe(Vibe newVibe){
-    	//Has no parentVibe. parentVibe uninitialized
     	return vibeRepository.save(newVibe);
     }
     
