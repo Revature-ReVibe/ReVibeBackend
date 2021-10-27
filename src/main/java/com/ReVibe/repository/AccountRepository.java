@@ -11,25 +11,25 @@ import org.springframework.data.jpa.repository.Query;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer>{
 	public<S extends Account>S save(S account);
-		
-	@Query("select name, username, profilepic from Account where Account.id = ?1")
-	public Account findByUserId(int id);
 
-	@Query("select name, username, profilepic from Account")
-	public List<Account> findAll();
+	public Account findByUserId(int id);
 	
-	@Query("select name, username, profilepic from Account where Account.name = ?1")
+	public List<Account> findAll();
+
 	public Account findByName(String name);
 	
-	@Query("select name, username, profilepic from Account where Account.name like ?1")
 	public List<Account> findByNameContaining(String name);
 	
 	@Modifying
-	@Query("update Account a set a.name = ?1, a.password = ?2, a.username=?3, a.profilepic=?4, where a.id= ?5")
-	void setAccountInfoByUserId(String name, String password, String username, String profilePic, Integer userId);
+	@Query("update Account a set a.name = ?1, a.password = ?2, a.username=?3,a.profilePic=?4 where a.email= ?5")
+	void setAccountInfoByUserId(String name, String password, String username,String profilepic, String email);
 	
 	public default Account saveAccount(Account account) {
 		return save(account);
 	}
+
+	public Account findByUsernameAndPassword(String username, String password);
+
+	public Account findByEmail(String email);
 }
 
