@@ -18,6 +18,8 @@ import com.ReVibe.model.Account;
 import com.ReVibe.service.AccountService;
 import com.ReVibe.service.JwtService;
 
+import io.jsonwebtoken.Claims;
+
 @RestController("accountController")
 @RequestMapping("/account")
 @CrossOrigin(origins="*")
@@ -105,3 +107,36 @@ public class AccountController {
 	
 }
 
+<<<<<<< HEAD
+=======
+	@PostMapping(path = "/signIn", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> signIn(@RequestBody Account account, HttpServletRequest request) {
+
+		account = this.accountService.findByUsernameAndPassword(account.getUsername(), account.getPassword());
+
+		if (account == null) {
+			return new ResponseEntity<String>("Incorrect user or password", HttpStatus.BAD_REQUEST);
+		} else {
+
+			HttpSession session = request.getSession();
+			session.setAttribute("userId", account.getUserId());
+			session.setAttribute("user", account);
+			System.out.println((Integer) session.getAttribute("userId"));
+			return new ResponseEntity<String>("Signed in", HttpStatus.OK);
+		}
+	}
+	
+	
+	@GetMapping("/authenticate")
+	public Boolean isLoggedIn(@RequestHeader("Authorization") String jwt) {
+		System.out.println("endpoint hit... jwt:" + jwt);
+		Claims claim = AccountService.decodeJWT(jwt);
+		if(claim.getIssuer().equals("ReViveBackend")) {
+			System.out.println("It Worked!!!");
+			return true;
+		}
+		return false;
+	}
+}
+
+>>>>>>> parent of 6ab81fe (modified the login method just a tiny bit so that it can be parsed easier on the front end)
