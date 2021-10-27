@@ -57,6 +57,12 @@ public class VibeService {
         }
     }
     
+    public List<Vibe> findByParentVibe(int parentVibe){
+        log.info("Find all replies for vibe {}", parentVibe);
+        return vibeRepository.findByParentVibe(parentVibe);
+    }
+    
+    
     public List<Like> findByVibeId(int vibeId){
         log.info("Find all likes for vibe {}", vibeId);
         return likeRepository.findByVibeId(vibeId);
