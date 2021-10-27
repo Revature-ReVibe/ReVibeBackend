@@ -1,6 +1,5 @@
 package com.ReVibe.repository;
 
-
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -18,6 +17,8 @@ public interface AccountRepository extends JpaRepository<Account, Integer>{
 
 	public Account findByName(String name);
 	
+	public Account findByUsername (String username);
+	
 	public List<Account> findByNameContaining(String name);
 	
 	@Modifying
@@ -31,5 +32,9 @@ public interface AccountRepository extends JpaRepository<Account, Integer>{
 	public Account findByUsernameAndPassword(String username, String password);
 
 	public Account findByEmail(String email);
+
 }
+
+
+
 
