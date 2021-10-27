@@ -3,8 +3,13 @@ package com.ReVibe.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,11 +48,15 @@ public class AccountController {
   
 	@GetMapping(path = "/findbyId", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Account findByUserId(@RequestHeader("Authorization") String jwt) {
+		try {
 		Object id = JwtService.decodeJWT(jwt).get("sub");
 		Account account = this.accountService.findByUserId( Integer.valueOf((String)id));
 		account.setUsername(null);
 		account.setPassword(null);
 		return account;
+		}catch(io.jsonwebtoken.ExpiredJwtException e) {
+			return null;
+		}
 	}
 
 	@GetMapping(path = "/name", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -81,7 +90,6 @@ public class AccountController {
 
 	@GetMapping(path="/searchaccounts", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public List<Account> searchAccounts(@RequestBody Account account){
-		System.out.println(account.getName());
 		List<Account> accounts = this.accountService.findBySearchName(account.getName());
 		for(int i=0; i< accounts.size(); i++) {
 			accounts.get(i).setUsername(null);
@@ -97,7 +105,12 @@ public class AccountController {
 	
 	@PostMapping(path = "/new", consumes = MediaType.APPLICATION_JSON_VALUE) 
 	public Account saveAccount(@RequestBody Account account) {
-		return this.accountService.saveAccount(account);
+		try {
+		account= this.accountService.saveAccount(account);
+		}catch(org.springframework.dao.DataIntegrityViolationException e) {
+			return null;
+		}
+		return account;
 	}
 	
 }

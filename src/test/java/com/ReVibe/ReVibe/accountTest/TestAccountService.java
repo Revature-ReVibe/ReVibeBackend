@@ -18,9 +18,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import com.ReVibe.model.Account;
 import com.ReVibe.repository.AccountRepository;
 import com.ReVibe.service.AccountService;
@@ -32,13 +29,12 @@ public class TestAccountService {
 
 	@Autowired
 	private MockMvc mockMvc;
-
+	
 	@InjectMocks
 	AccountService accountService;
-
+	
 	@Mock
 	AccountRepository accountRepository;
-
 	@BeforeAll
 	public void setup() {
 		MockitoAnnotations.openMocks(this);
