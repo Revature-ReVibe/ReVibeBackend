@@ -1,6 +1,7 @@
 package com.ReVibe.postTest;
 
 import com.ReVibe.model.Vibe;
+import com.ReVibe.repository.LikeRepository;
 import com.ReVibe.repository.VibeRepository;
 import com.ReVibe.service.VibeService;
 import java.util.ArrayList;
@@ -27,9 +28,15 @@ public class VibeServiceTest {
         MockitoAnnotations.openMocks(this);
     }
     
+    @Mock
+    private LikeRepository likeRepository;
+    {
+        MockitoAnnotations.openMocks(this);
+    }
+    
     @BeforeEach
     public void setUp(){
-        vibeService = new VibeService(vibeRepository);
+        vibeService = new VibeService(vibeRepository, likeRepository);
     }
     
     /**
@@ -77,6 +84,14 @@ public class VibeServiceTest {
         
         List<Vibe> result = vibeService.findAll();
         assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void testLike(){
+        System.out.println("like");
+        int vibeid = 1;
+        
+        
     }
     
 }
