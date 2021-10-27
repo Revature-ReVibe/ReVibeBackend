@@ -33,12 +33,7 @@ public class JwtController {
 	public String logUserIn(@RequestBody Account account) {
 		account = this.accountservice.findByUsernameAndPassword(account.getUsername(), account.getPassword());
 		String jwt;
-		
-	
 		return  jwt = JwtService.createJWT(UUID.randomUUID().toString(), "ReViveBackend", String.valueOf(account.getUserId()), 600000L);
-
-
-	
 	}
 	
 	@GetMapping("/authenticate")
