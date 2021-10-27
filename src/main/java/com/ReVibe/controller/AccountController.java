@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import java.util.Random;
 import com.ReVibe.model.Account;
 import com.ReVibe.service.AccountService;
 import com.ReVibe.service.JwtService;
@@ -33,6 +35,9 @@ public class AccountController {
 	public AccountController(AccountService accountService) {
 		this.accountService = accountService;
 	}
+	
+	@Autowired
+	private JavaMailSender mailSender;
 
 	
 
@@ -82,7 +87,7 @@ public class AccountController {
 	public boolean updateprofile(@RequestBody Account account, @RequestHeader("Authorization") String jwt) {
 		try {
 		  	int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
-		Account currentAccount = this.accountService.findByEmail(account.getEmail());
+		Account currentAccount = this.accountService.findByUserId(id);
 		if(account.getName() == "") {
 			account.setName(currentAccount.getName());
 		}
@@ -96,6 +101,7 @@ public class AccountController {
 			account.setProfilePic(currentAccount.getProfilePic());
 		}
 		this.accountService.merge(account);
+		System.out.println(account);
 		return true;
 		}catch(java.lang.NullPointerException e) {
   			return false;
@@ -120,8 +126,27 @@ public class AccountController {
 	}
 	
 	@PostMapping(path = "/resetpass", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void resetPass(String email) {
-		
+	public boolean resetPass(@RequestBody Account account) {
+		try {
+			account = this.accountService.findByEmail(account.getEmail());
+			account.setPassword("tempPassword"); //generate a password if time allows
+			this.accountService.merge(account);
+			//call email stuff
+			SimpleMailMessage message = new SimpleMailMessage();
+			
+			message.setFrom("revibenov5@gmail.com");
+			message.setTo(account.getEmail());
+			
+			String mailSubject ="Password reset";
+			String mailContent = "New Password = " + account.getPassword()+" please change when log in";
+			message.setSubject(mailSubject);
+			message.setText(mailContent);
+			
+			mailSender.send(message);
+			return true;
+		}catch(java.lang.NullPointerException e) {
+  			return false;
+  	}
 	}
 	
 	@PostMapping(path = "/new", consumes = MediaType.APPLICATION_JSON_VALUE) 
