@@ -54,7 +54,8 @@ public class VibeServiceTest {
         System.out.println("findById");
         int id = 0;
         
-        Vibe vibe = null;
+        Vibe vibe = new Vibe();
+        vibe.setVibeId(id);
         Optional<Vibe> vibeOp = Optional.of(vibe);
         Mockito.when(vibeRepository.findById(id)).thenReturn(vibeOp);
         Vibe result = vibeService.findById(id);
