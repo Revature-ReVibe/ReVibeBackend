@@ -41,9 +41,13 @@ private static String SECRET_KEY = "${jwt.secret}";
 	}
 	
 	public static Claims decodeJWT(String jwt) {
-        //This line will throw an exception if it is not a signed JWS (as expected)
+		try {
 		Claims claim = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY)).parseClaimsJws(jwt).getBody();
-		
 		return claim;
+		}catch(io.jsonwebtoken.SignatureException e) { 
+			return null;
+		}catch(io.jsonwebtoken.ExpiredJwtException e) {
+			return null;
+		}
 	}
 }
