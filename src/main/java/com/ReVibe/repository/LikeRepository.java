@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface LikeRepository extends JpaRepository<Like, Integer>{
     public List<Like> findByUserId(int userId);
     public List<Like> findByVibeId(int vibeId);
-    public Optional<Like> findByVibeIdAndUserId(int vibeId, int userId);
+    public Like findByVibeIdAndUserId(int vibeId, int userId);
 }//LikeRepository

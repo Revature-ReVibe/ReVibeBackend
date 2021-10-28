@@ -45,14 +45,14 @@ public class VibeService {
     }
 
     public Like like(int vibeId, int accountId) {
-        Optional<Like> likeOp = likeRepository.findByVibeIdAndUserId(vibeId, accountId);
+        Like likeOp = likeRepository.findByVibeIdAndUserId(vibeId, accountId);
 
-        if (likeOp.isEmpty()){
+        if (likeOp == null){
             log.info("Account {} added like to vibe {}", accountId, vibeId);
             return likeRepository.save(new Like(vibeId, accountId));
         } else{
             log.info("Account {} removed like from vibe {}", accountId, vibeId);
-            likeRepository.delete(likeOp.get());
+            likeRepository.delete(likeOp);
             return null;
         }
     }
