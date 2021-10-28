@@ -1,0 +1,554 @@
+{
+	"info": {
+		"_postman_id": "04383a1f-535c-4828-b530-0ef12667e3a1",
+		"name": "ReVibe",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "jwt",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"firstUser\",\r\n    \"password\":\"root\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/jwt/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"jwt",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "authorization",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"firstUser\",\r\n    \"password\":\"root\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/jwt/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"jwt",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "account",
+			"item": [
+				{
+					"name": "get all",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"firstUser\",\r\n    \"password\":\"root\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/account/getall",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"account",
+								"getall"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find by name",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5YjFiNWQ0NS1mMzEyLTRiZWMtODRlNi03NTgxYzNmY2JlMjciLCJpYXQiOjE2MzUyNTE4NTksInN1YiI6IjEiLCJpc3MiOiJSZVZpdmVCYWNrZW5kIiwiZXhwIjoxNjM1MjUyNDU5fQ.wA5yGwvlLqWVZC4JVKAlHztaJQJzFaNLB4YDUHPa6cE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/account/name?name=first",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"account",
+								"name"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "first"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5YjFiNWQ0NS1mMzEyLTRiZWMtODRlNi03NTgxYzNmY2JlMjciLCJpYXQiOjE2MzUyNTE4NTksInN1YiI6IjEiLCJpc3MiOiJSZVZpdmVCYWNrZW5kIiwiZXhwIjoxNjM1MjUyNDU5fQ.wA5yGwvlLqWVZC4JVKAlHztaJQJzFaNLB4YDUHPa6cE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/account/findbyId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"account",
+								"findbyId"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update profile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5YjFiNWQ0NS1mMzEyLTRiZWMtODRlNi03NTgxYzNmY2JlMjciLCJpYXQiOjE2MzUyNTE4NTksInN1YiI6IjEiLCJpc3MiOiJSZVZpdmVCYWNrZW5kIiwiZXhwIjoxNjM1MjUyNDU5fQ.wA5yGwvlLqWVZC4JVKAlHztaJQJzFaNLB4YDUHPa6cE",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"a\",\r\n    \"password\":\"f\",\r\n    \"username\":\"hello\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/account/updateprofile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"account",
+								"updateprofile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5YjFiNWQ0NS1mMzEyLTRiZWMtODRlNi03NTgxYzNmY2JlMjciLCJpYXQiOjE2MzUyNTE4NTksInN1YiI6IjEiLCJpc3MiOiJSZVZpdmVCYWNrZW5kIiwiZXhwIjoxNjM1MjUyNDU5fQ.wA5yGwvlLqWVZC4JVKAlHztaJQJzFaNLB4YDUHPa6cE",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"c\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/account/searchaccounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"account",
+								"searchaccounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "new account",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5YjFiNWQ0NS1mMzEyLTRiZWMtODRlNi03NTgxYzNmY2JlMjciLCJpYXQiOjE2MzUyNTE4NTksInN1YiI6IjEiLCJpc3MiOiJSZVZpdmVCYWNrZW5kIiwiZXhwIjoxNjM1MjUyNDU5fQ.wA5yGwvlLqWVZC4JVKAlHztaJQJzFaNLB4YDUHPa6cE",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"a\",\r\n    \"password\":\"a\",\r\n    \"email\":\"a@test.com\",\r\n    \"name\":\"hi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/account/new",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"account",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJjNzQ0YWZmOS0yZmFiLTQ3ZGUtYTg3Yi04ZWI2MzMyZTYxNTMiLCJpYXQiOjE2MzUzNTUwNjYsInN1YiI6IjMiLCJpc3MiOiJSZVZpdmVCYWNrZW5kIiwiZXhwIjoxNjM1MzU1NjY2fQ.nLeP59IvNaYj4vUdk0wJ-agLAMJFg0EJlMrPpMShN5w",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"11111a\",\r\n    \"password\":\"a\",\r\n    \"email\":\"wileycoyote166@gmail.com\",\r\n    \"name\":\"hi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8088/account/resetpass",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"account",
+								"resetpass"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "vibes",
+			"item": [
+				{
+					"name": "vibe find all",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2MzJkYTM2ZS1hNWJjLTQ3OTMtOWM0YS0wZGI1YTEzY2FjZDkiLCJpYXQiOjE2MzU0Mjk2MzcsInN1YiI6IjEiLCJpc3MiOiJSZVZpdmVCYWNrZW5kIiwiZXhwIjoxNjM1NDMwMjM3fQ.6P5Dc1HrBzABWvkpzpyWdCEmvRKJNg5nke62A23gX_s",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8088/vibe/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"vibe",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find by account",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2MzJkYTM2ZS1hNWJjLTQ3OTMtOWM0YS0wZGI1YTEzY2FjZDkiLCJpYXQiOjE2MzU0Mjk2MzcsInN1YiI6IjEiLCJpc3MiOiJSZVZpdmVCYWNrZW5kIiwiZXhwIjoxNjM1NDMwMjM3fQ.6P5Dc1HrBzABWvkpzpyWdCEmvRKJNg5nke62A23gX_s",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8088/vibe/find/account",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"vibe",
+								"find",
+								"account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create vibe",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n        \"vibePic\": \"picture\",\r\n        \"vibeMessage\": \"vibemessage\",\r\n        \"vibeLike\": null,\r\n        \"accountid\": 1,\r\n        \"parentVibe\": null,\r\n        \"date\": null,\r\n        \"replyVibes\": null\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8088/vibe/createVibe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"vibe",
+								"createVibe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create reply",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2MzJkYTM2ZS1hNWJjLTQ3OTMtOWM0YS0wZGI1YTEzY2FjZDkiLCJpYXQiOjE2MzU0Mjk2MzcsInN1YiI6IjEiLCJpc3MiOiJSZVZpdmVCYWNrZW5kIiwiZXhwIjoxNjM1NDMwMjM3fQ.6P5Dc1HrBzABWvkpzpyWdCEmvRKJNg5nke62A23gX_s",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n        \"vibePic\": \"picture\",\r\n        \"vibeMessage\": \"vibemessage\",\r\n        \"vibeLike\": null,\r\n        \"accountid\": 1,\r\n        \"parentVibe\": 1,\r\n        \"date\": null,\r\n        \"replyVibes\": null\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8088/vibe/createReply",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"vibe",
+								"createReply"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find by vibe id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2MzJkYTM2ZS1hNWJjLTQ3OTMtOWM0YS0wZGI1YTEzY2FjZDkiLCJpYXQiOjE2MzU0Mjk2MzcsInN1YiI6IjEiLCJpc3MiOiJSZVZpdmVCYWNrZW5kIiwiZXhwIjoxNjM1NDMwMjM3fQ.6P5Dc1HrBzABWvkpzpyWdCEmvRKJNg5nke62A23gX_s",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8088/vibe/find/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"vibe",
+								"find",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "like vibes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyNjhjNzU2My01ODVkLTQ1ZGMtYWM1OS0zZDNkNWE5OGY3ODAiLCJpYXQiOjE2MzU0MzAyOTEsInN1YiI6IjEiLCJpc3MiOiJSZVZpdmVCYWNrZW5kIiwiZXhwIjoxNjM1NDMwODkxfQ.cKrpolVCF7UltZjVfQckFi4hLsFy7sBVdxIkf3ia4OI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8088/vibe/like/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"vibe",
+								"like",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get likes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyNjhjNzU2My01ODVkLTQ1ZGMtYWM1OS0zZDNkNWE5OGY3ODAiLCJpYXQiOjE2MzU0MzAyOTEsInN1YiI6IjEiLCJpc3MiOiJSZVZpdmVCYWNrZW5kIiwiZXhwIjoxNjM1NDMwODkxfQ.cKrpolVCF7UltZjVfQckFi4hLsFy7sBVdxIkf3ia4OI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8088/vibe/like/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"vibe",
+								"like",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

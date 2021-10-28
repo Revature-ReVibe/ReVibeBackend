@@ -45,40 +45,21 @@ public class VibeService {
     }
 
     public Like like(int vibeId, int accountId) {
-//        Vibe vibe = findById(vibeId);
-        Like like = new Like(vibeId, accountId);
-        Optional<Like> likeOp = likeRepository.findByVibeIdAndUserId(vibeId, accountId);
+        Like likeOp = likeRepository.findByVibeIdAndUserId(vibeId, accountId);
 
-        if (likeOp.isEmpty()){
-//            vibe.getLikes().add(like);
+        if (likeOp == null){
             log.info("Account {} added like to vibe {}", accountId, vibeId);
-            return likeRepository.save(like);
+            return likeRepository.save(new Like(vibeId, accountId));
         } else{
-//            vibe.getLikes().remove(like);
             log.info("Account {} removed like from vibe {}", accountId, vibeId);
-            likeRepository.delete(like);
+            likeRepository.delete(likeOp);
             return null;
         }
-
     }
     
-//	public Vibe unlike(Vibe vibe, int accountId) {
-//    	//Working on likes
-//		
-//		Like like = new Like();
-//		
-//		like.setVibeId(vibe.getVibeId());	
-//		like.setUserId(accountId);
-//		//Check if Like exists, if it does remove it
-//		if(vibe.getLikes().contains(like)) {
-//			vibe.getLikes().remove(like);
-//		}
-//    	return vibeRepository.save(vibe);
-//	}
-	
-    //In case needed
-    public List<Like> getAllLikes(Vibe vibe){
-        return vibe.getLikes();	
+    public List<Like> findByVibeId(int vibeId){
+        log.info("Find all likes for vibe {}", vibeId);
+        return likeRepository.findByVibeId(vibeId);
     }
 	
     public List<Vibe> findByPoster(int accountId){
