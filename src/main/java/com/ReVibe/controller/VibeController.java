@@ -19,6 +19,7 @@ import com.ReVibe.model.Vibe;
 import com.ReVibe.service.JwtService;
 import com.ReVibe.service.VibeService;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController("vibeController") @RequestMapping("/vibe")
@@ -72,7 +73,7 @@ public class VibeController {
         }
     }
 
-    @RequestMapping(path="/like"/*, consumes=MediaType.APPLICATION_JSON_VALUE*/)
+    @RequestMapping(path="/like", method=RequestMethod.POST)
     public ResponseEntity <Like> like(@RequestParam int vibeId, @RequestHeader("Authorization") String jwt){
         try {
             int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
@@ -82,16 +83,21 @@ public class VibeController {
         }
     }
     
-//    @PostMapping(path="/unlike", consumes=MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity <Vibe> unlike(@RequestBody Vibe vibe, ){
-//        return new ResponseEntity<>(this.vibeService.unlike(vibe, accountId), HttpStatus.CREATED);
-//    }
-    
     @GetMapping(path="/find/account", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Vibe>> findByPoster(@RequestHeader("Authorization") String jwt){
         try {
             int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
             return new ResponseEntity<>(this.vibeService.findByPoster(id), HttpStatus.OK);
+        }catch(java.lang.NullPointerException e) {
+            return null;
+        }
+    }
+    
+    @RequestMapping("/likes")
+    public ResponseEntity<List<Like>> getAllLikes(@RequestParam int vibeId, @RequestHeader("Authorization") String jwt){
+        try {
+            int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
+            return new ResponseEntity<>(this.vibeService.findByVibeId(vibeId), HttpStatus.OK);
         }catch(java.lang.NullPointerException e) {
             return null;
         }
