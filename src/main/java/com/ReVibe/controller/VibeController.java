@@ -43,16 +43,16 @@ public class VibeController {
     }
     
     @PostMapping(path="/createReply", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity <Vibe> saveReply(@RequestBody Vibe vibe, int parentVibe, @RequestHeader("Authorization") String jwt){
+    public ResponseEntity <Vibe> saveReply(@RequestBody Vibe vibe, @RequestHeader("Authorization") String jwt){
     	try {
             int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
-            return new ResponseEntity<>(this.vibeService.saveReply(vibe, parentVibe), HttpStatus.CREATED);
+            return new ResponseEntity<>(this.vibeService.saveReply(vibe, vibe.getParentVibe()), HttpStatus.CREATED);
         }catch(java.lang.NullPointerException e) {
             return null;
         }
     }
     
-    @GetMapping(path="/find/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path="/find/{vibeId}", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Vibe> findById(@PathVariable int vibeId, @RequestHeader("Authorization") String jwt){
     	try {
             int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
@@ -73,8 +73,8 @@ public class VibeController {
         }
     }
 
-    @RequestMapping(path="/like", method=RequestMethod.POST)
-    public ResponseEntity <Like> like(@RequestParam int vibeId, @RequestHeader("Authorization") String jwt){
+    @GetMapping(path="/like/{vibeId}", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity <Like> like(@PathVariable int vibeId, @RequestHeader("Authorization") String jwt){
         try {
             int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
             return new ResponseEntity<>(this.vibeService.like(vibeId, id), HttpStatus.OK);
@@ -93,8 +93,8 @@ public class VibeController {
         }
     }
     
-    @RequestMapping("/likes")
-    public ResponseEntity<List<Like>> getAllLikes(@RequestParam int vibeId, @RequestHeader("Authorization") String jwt){
+    @GetMapping("/likes/{vibeId}")
+    public ResponseEntity<List<Like>> getAllLikes(@PathVariable int vibeId, @RequestHeader("Authorization") String jwt){
         try {
             int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
             return new ResponseEntity<>(this.vibeService.findByVibeId(vibeId), HttpStatus.OK);
