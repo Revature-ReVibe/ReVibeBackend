@@ -10,7 +10,6 @@ CREATE TABLE vibe(
 vibeid int unsigned not null auto_increment Primary key,
 vibepic varchar(500),
 vibemessage varchar(300),
-vibelike int unsigned,
 accountid int unsigned not null,
 parentvibe int,
 vibelike int unsigned,
