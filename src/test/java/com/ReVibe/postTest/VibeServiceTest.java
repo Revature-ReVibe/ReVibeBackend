@@ -1,5 +1,6 @@
 package com.ReVibe.postTest;
 
+import com.ReVibe.model.Like;
 import com.ReVibe.model.Vibe;
 import com.ReVibe.repository.LikeRepository;
 import com.ReVibe.repository.VibeRepository;
@@ -39,26 +40,32 @@ public class VibeServiceTest {
         vibeService = new VibeService(vibeRepository, likeRepository);
     }
     
-    /**
-     * Test of save method, of class VibeService.
-     */
-//    @Test
-//    public void testSave() {
-//        System.out.println("save");
-//        Vibe vibe = null;
-//        Vibe expResult = vibe;
-//        
-//        Mockito.when(vibeRepository.save(vibe)).thenReturn(vibe);
-//        Vibe result = vibeService.save(vibe);
-//        assertEquals(expResult, result);
-//    }
+    @Test
+    public void testSaveVibe() {
+        Vibe vibe = new Vibe();
+        vibe.setVibeMessage("Hello!");
+        
+        Mockito.when(vibeRepository.save(vibe)).thenReturn(vibe);
+        
+        Vibe expResult = vibe;
+        Vibe result = vibeService.saveVibe(vibe);
+        assertEquals(expResult.getVibeMessage(), result.getVibeMessage());
+    }
+    
+    @Test
+    public void testSaveReply(){
+        Vibe expResult = new Vibe();
+        int parentId = 2;
+        
+        Mockito.when(vibeRepository.save(expResult)).thenReturn(expResult);
+        Vibe result = vibeService.saveReply(expResult, parentId);
+        expResult.setParentVibe(parentId);
+        
+        assertEquals(expResult, result);
+    }
 
-    /**
-     * Test of findById method, of class VibeService.
-     */
     @Test
     public void testFindById() {
-        System.out.println("findById");
         int id = 0;
         
         Vibe vibe = new Vibe();
@@ -69,14 +76,10 @@ public class VibeServiceTest {
         assertEquals(vibeOp.get(), result);
     }
 
-    /**
-     * Test of findAll method, of class VibeService.
-     */
     @Test
     public void testFindAll() {
-        System.out.println("findAll");
-        Vibe vibe1 = null;
-        Vibe vibe2 = null;
+        Vibe vibe1 = new Vibe();
+        Vibe vibe2 = new Vibe();
         List<Vibe> expResult = new ArrayList<>();
         expResult.add(vibe1);
         expResult.add(vibe2);
@@ -88,10 +91,28 @@ public class VibeServiceTest {
     
     @Test
     public void testLike(){
-        System.out.println("like");
         int vibeid = 1;
+        int accountid = 3;
         
+        Like expResult = new  Like(vibeid, accountid);
+        Mockito.when(likeRepository.save(expResult)).thenReturn(expResult);
         
+        Like result = vibeService.like(vibeid, accountid);
+        assertEquals(expResult, result);
     }
+    
+    @Test
+    public void testUnlike(){
+        int vibeid = 1;
+        int accountid = 3;
+        
+        Like expResult = null;
+        Mockito.when(likeRepository.save(expResult)).thenReturn(expResult);
+        
+        vibeService.like(vibeid, accountid);
+        Like result = vibeService.like(vibeid, accountid);
+        assertEquals(expResult, result);
+    }
+    
     
 }
