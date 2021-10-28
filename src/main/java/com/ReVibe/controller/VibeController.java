@@ -70,7 +70,7 @@ public class VibeController {
         }
     }
 
-    @PostMapping(path="/like/{vibeId}", consumes=MediaType.ALL_VALUE)
+    @PostMapping(path="/like/{vibeId}")
     public ResponseEntity <Like> like(@PathVariable int vibeId, @RequestHeader("Authorization") String jwt){
         try {
             int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));

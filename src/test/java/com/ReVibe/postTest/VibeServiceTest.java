@@ -39,30 +39,6 @@ public class VibeServiceTest {
     public void setUp(){
         vibeService = new VibeService(vibeRepository, likeRepository);
     }
-    
-    @Test
-    public void testSaveVibe() {
-        Vibe vibe = new Vibe();
-        vibe.setVibeMessage("Hello!");
-        
-        Mockito.when(vibeRepository.save(vibe)).thenReturn(vibe);
-        
-        Vibe expResult = vibe;
-        Vibe result = vibeService.saveVibe(vibe);
-        assertEquals(expResult.getVibeMessage(), result.getVibeMessage());
-    }
-    
-    @Test
-    public void testSaveReply(){
-        Vibe expResult = new Vibe();
-        int parentId = 2;
-        
-        Mockito.when(vibeRepository.save(expResult)).thenReturn(expResult);
-        Vibe result = vibeService.saveReply(expResult, parentId);
-        expResult.setParentVibe(parentId);
-        
-        assertEquals(expResult, result);
-    }
 
     @Test
     public void testFindById() {
@@ -90,29 +66,35 @@ public class VibeServiceTest {
     }
     
     @Test
-    public void testLike(){
-        int vibeid = 1;
+    public void testLikeAndUnlike(){
+        int vibeId = 1;
         int accountid = 3;
         
-        Like expResult = new  Like(vibeid, accountid);
-        Mockito.when(likeRepository.save(expResult)).thenReturn(expResult);
+        Vibe vibe = new Vibe();
+        vibe.setVibeId(vibeId);
         
-        Like result = vibeService.like(vibeid, accountid);
-        assertEquals(expResult, result);
+        vibe.setVibeLike(0);
+        Like like = new Like(vibeId, accountid);
+                
+        Mockito.when(vibeRepository.findById(vibeId)).thenReturn(Optional.of(vibe));
+        Mockito.when(likeRepository.findByVibeIdAndUserId(vibeId, accountid)).thenReturn(null);
+        
+        Vibe expVibe = vibe;
+        expVibe.setVibeLike(1);
+        Mockito.when(vibeRepository.save(vibe)).thenReturn(expVibe);
+        
+        Like expLike = like;
+        Mockito.when(likeRepository.save(like)).thenReturn(expLike);
+        
+        assertEquals(expLike, vibeService.like(vibeId, accountid));
+        assertEquals(expVibe, vibeService.findById(vibeId));
+        
+        Mockito.when(likeRepository.findByVibeIdAndUserId(vibeId, accountid)).thenReturn(expLike);
+        expVibe.setVibeLike(0);
+        Mockito.when(vibeRepository.save(vibe)).thenReturn(expVibe);
+        
+        assertNull(vibeService.like(vibeId, accountid));
+        assertEquals(expVibe, vibeService.findById(vibeId));
     }
-    
-    @Test
-    public void testUnlike(){
-        int vibeid = 1;
-        int accountid = 3;
-        
-        Like expResult = null;
-        Mockito.when(likeRepository.save(expResult)).thenReturn(expResult);
-        
-        vibeService.like(vibeid, accountid);
-        Like result = vibeService.like(vibeid, accountid);
-        assertEquals(expResult, result);
-    }
-    
     
 }
