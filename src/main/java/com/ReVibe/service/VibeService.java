@@ -5,7 +5,6 @@ import com.ReVibe.model.Vibe;
 import com.ReVibe.repository.LikeRepository;
 import com.ReVibe.repository.VibeRepository;
 import java.util.List;
-import java.util.Optional;
 import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,19 +22,24 @@ public class VibeService {
         this.likeRepository = likeRepository;
     }
     
-    public Vibe saveVibe(Vibe newVibe){
-        log.info("Saving vibe ({})", newVibe);
-    	return vibeRepository.save(newVibe);
+    public Vibe saveVibe(Vibe vibe){
+        log.info("Saving a new vibe");
+        vibe.setVibeLike(0);
+        Vibe newVibe = vibeRepository.save(vibe);
+        log.info("{} saved", newVibe);
+    	return newVibe;
     }
     
-    public Vibe saveReply(Vibe vibeReply, int parentId) {
-        log.info("Saving reply ({})", vibeReply);
-    	vibeReply.setParentVibe(parentId);
-    	return vibeRepository.save(vibeReply);
+    public Vibe saveReply(Vibe vibe, int parentId) {
+    	vibe.setParentVibe(parentId);
+        log.info("Saving a reply to vibe {}", parentId);
+        Vibe reply = vibeRepository.save(vibe);
+        log.info("{} saved", reply);
+    	return reply;
     }
     
     public Vibe findById(int id){
-        log.info("find vibe by id");
+        log.info("Finding vibe with id {}", id);
         return vibeRepository.findById(id).get();
     }
     
@@ -45,25 +49,33 @@ public class VibeService {
     }
 
     public Like like(int vibeId, int accountId) {
-        Like likeOp = likeRepository.findByVibeIdAndUserId(vibeId, accountId);
+        Vibe vibe = vibeRepository.findById(vibeId).get();
+        if (vibe != null){
+            log.info("Account {} toggling like for vibe {}", accountId, vibeId);
+            Like like = likeRepository.findByVibeIdAndUserId(vibeId, accountId);
 
-        if (likeOp == null){
-            log.info("Account {} added like to vibe {}", accountId, vibeId);
-            return likeRepository.save(new Like(vibeId, accountId));
-        } else{
-            log.info("Account {} removed like from vibe {}", accountId, vibeId);
-            likeRepository.delete(likeOp);
-            return null;
+            if (like == null){
+                log.info("Account {} adding like to vibe {}", accountId, vibeId);
+                vibe.setVibeLike(vibe.getVibeLike()+1);
+                vibeRepository.save(vibe);
+                return likeRepository.save(new Like(vibeId, accountId));
+            } else{
+                log.info("Account {} removing like from vibe {}", accountId, vibeId);
+                vibe.setVibeLike(vibe.getVibeLike()-1);
+                vibeRepository.save(vibe);
+                likeRepository.delete(like);
+            }
         }
+        return null;
     }
     
-    public List<Like> findByVibeId(int vibeId){
-        log.info("Find all likes for vibe {}", vibeId);
+    public List<Like> findLikesByVibeId(int vibeId){
+        log.info("Finding all likes for vibe {}", vibeId);
         return likeRepository.findByVibeId(vibeId);
     }
 	
     public List<Vibe> findByPoster(int accountId){
-        log.info("find vibes posted by account {}", accountId);
+        log.info("Finding all vibes posted by account {}", accountId);
     	return vibeRepository.findByAccountid(accountId);
     }
 }
