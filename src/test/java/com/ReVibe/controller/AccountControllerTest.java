@@ -1,5 +1,7 @@
 package com.ReVibe.controller;
 
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 //import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -10,6 +12,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.servlet.FilterChain;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -17,6 +24,7 @@ import org.junit.Before;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,6 +43,7 @@ import static org.hamcrest.Matchers.*;
 
 import com.ReVibe.model.Account;
 import com.ReVibe.service.AccountService;
+import com.ReVibe.service.JwtService;
 //import com.ReVibe.service.JwtService;
 
 @SpringBootTest
@@ -46,18 +55,20 @@ public class AccountControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
-	
+
 	@InjectMocks
 	private AccountController accountController;
-	
+
 	@Before 
 	public void setup() {
 		MockitoAnnotations.openMocks(this);
 		mockMvc = MockMvcBuilders.standaloneSetup(accountController).build();
 	}
 
+	private JwtService jwtService; 
+
 	@Test
-	@DisplayName("GET /account/getall success")
+	@DisplayName("GET /account/getall")
 	public void accountGetAllSuccess() throws Exception {
 		List<Account> accounts = new LinkedList<>();
 		accounts.add(new Account(1, "userName1", "password1", "George Washington", null, null, null, null));
@@ -67,7 +78,7 @@ public class AccountControllerTest {
 			accounts.get(i).setPassword(null);
 		}
 		when(accountService.findAll()).thenReturn(accounts);
-		this.mockMvc.perform(get("/account/getall"))
+		this.mockMvc.perform(get("/account/getall").header("Authorization", jwtService.createJWT("abc", "def", "100", 10000)))
 		.andDo(print())
 		.andExpect(status().isOk())	
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -81,11 +92,21 @@ public class AccountControllerTest {
 		.andExpect(jsonPath("$[1].password", nullValue()))
 		.andExpect(jsonPath("$[1].name", is("John Adams")));
 	}	
-	
+
 	@Test
 	public void testFindByUserId() throws Exception {
 		when(accountService.findByUserId(Mockito.any(Integer.class))).thenReturn(new Account(1,"userName","password","MyName", null, null, null, null));
-		this.mockMvc.perform(get("/account/findbyId"))
+		this.mockMvc.perform(get("/account/findbyId").header("Authorization", jwtService.createJWT("abc", "def", "100", 10000)))
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+		.andExpect(jsonPath("$.userId", is(1)));
+	}
+
+	@Test
+	public void testFindByName() throws Exception {
+		when(accountService.findByName(Mockito.any(String.class))).thenReturn(new Account(1,"userName","password","MyName", null, null, null, null));
+		this.mockMvc.perform(get("/account/name").header("Authorization", jwtService.createJWT("abc", "def", "100", 10000)).param("name","asdf"))
 		.andDo(print())
 		.andExpect(status().isOk())
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -93,43 +114,14 @@ public class AccountControllerTest {
 	}
 	
 	@Test
-	public void testFindByName() throws Exception {
-		when(accountService.findByUserId(Mockito.any(Integer.class))).thenReturn(new Account(1,"","","", null, null, null, null));
-		this.mockMvc.perform(get("/account/name"))
-		.andDo(print())
-		.andExpect(status().isOk())
-		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-		.andExpect(jsonPath("$[0].userId", is(1)));
+	public void testUpdateProfile() {
+		Account account = new Account(1,"userName","password","MyName", null, null, null, null);
+		//accountService = mock(AccountService.class);
+		//AccountService newAccount = mock(AccountService.class);
+		doNothing().when(accountService).merge((Account) isA(Account.class));
+		//this.mockMvc.perform())		
 	}
 	
-	
-
-//	@Test
-//	@DisplayName("GET /account/{id} Found")
-//	public void testFindByUserId() throws Exception {
-//		Account account = new Account(1, "userName1", "password1", "George Washington", null, null, null, null);
-//		Mockito.when(service.findByUserId(Mockito.any())).thenReturn(account);
-//
-//		mockMvc.perform(get("/account/{id}", 1))
-//		.andExpect(status().isOk())
-//		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-//		.andExpect(jsonPath("$",hasSize(1)))
-//		.andExpect(jsonPath("$.userId", is(1)))
-//		.andExpect(jsonPath("$.username", is("userName1")))
-//		.andExpect(jsonPath("$.password", is("password1")))
-//		.andExpect(jsonPath("$.name", is("George Washington")));
-//	}
-
-	// @Test
-	// @DisplayName("GET /account/{id} Not Found")
-	// public void testFindByUserIdNotFound() throws Exception {
-	//  Account account = new Account(11, "userName1", "password1", "George Washington", null, null, null, null);
-	//  doReturn(account).when(service).findByUserId(1);
-
-	//  mockMvc.perform(get("/account/{id}", 1))
-	//    .andExpect(status().isNotFound());
-	// }
-
 	// @Test
 	// @DisplayName("PUT /account/updateprofile/{id} Success")
 	// public void testUpdateprofile() throws Exception {
