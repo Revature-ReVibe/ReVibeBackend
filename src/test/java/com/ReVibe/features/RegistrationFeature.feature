@@ -21,16 +21,20 @@ Feature: Registration
 
 	@reg1
 	Scenario: A user wants to register for the site with valid information
-		Given A user is on the login page
+		Given A user is visiting the the login page
 		When A user clicks on the "create new account" button
-		Then A user is redirected to the "registration page"
+		Then The user is redirected to the "registration page"
 		
 	@reg2
 	Scenario: A user want to fill out the registration form
 	Given A user is on the registration page
 	When a user enter a valid "name", "username", "password", "email address" and "profile picture"
 	And a user clicks "submit"
-	Then a user will be redirected to the "login page"
+	Then a user will be rerouted to the "login page"
   
-
+  @reg3
+	Scenario: A user doesnt fill out the registration form
+	Given A user is currently on the registration page
+	When a user clicks the "submit" button without entering information
+	Then the user sees
  

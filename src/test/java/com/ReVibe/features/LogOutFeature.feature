@@ -23,7 +23,7 @@ Feature: Log out
 	Scenario: A user wants to logout of the site
 	Given A user is on any "page" but login or registration
 	When A user clicks the "logout" button
-	Then A user is redirected to the "login page"
+	Then A user is returned to the "login page"
 	
 	
  

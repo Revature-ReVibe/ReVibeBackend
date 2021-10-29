@@ -18,11 +18,12 @@
 #Sample Feature Definition Template
 @tag
 Feature: Login
-  
+  Background: 
+  Given A user is on the login page
 
   @tag1
   Scenario: A user wants to login to the application with correct credentials
-    Given A user is on the login page
+   	Given A user is on the login page
     
     When A user enters valid "username" and "password"
    
@@ -31,7 +32,7 @@ Feature: Login
 
   @tag2
   Scenario Outline: A user wants to login to the application but uses incorrect credentials
-  	Given A user is on the login page
+  	Given A user is currently on the login page
   	
   	When A user enters a invalid "username" and "password"
   	
