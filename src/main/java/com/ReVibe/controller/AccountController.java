@@ -55,19 +55,19 @@ public class AccountController {
   			return null;
   		}
 	}
-  
-	@GetMapping(path = "/findbyId", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Account findByUserId(@RequestHeader("Authorization") String jwt) {
-		try {
-		Object id = JwtService.decodeJWT(jwt).get("sub");
-		Account account = this.accountService.findByUserId( Integer.valueOf((String)id));
-		account.setUsername(null);
-		account.setPassword(null);
-		return account;
-		}catch(io.jsonwebtoken.ExpiredJwtException e) {
-			return null;
-		}
-	}
+
+  @GetMapping(path = "/findbyId", produces = MediaType.APPLICATION_JSON_VALUE)
+  public Account findByUserId(@RequestHeader("Authorization") String jwt) {
+    try {
+      Object id = JwtService.decodeJWT(jwt).get("sub");
+      Account account = this.accountService.findByUserId( Integer.valueOf((String)id));
+      account.setUsername(null);
+      account.setPassword(null);
+      return account;
+    }catch(java.lang.NullPointerException e) {
+      return null;
+    }
+  }
 
 	@GetMapping(path = "/name", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Account findByName(@RequestParam String name,@RequestHeader("Authorization") String jwt) {

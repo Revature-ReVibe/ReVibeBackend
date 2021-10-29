@@ -2,17 +2,21 @@ package com.ReVibe.controller;
 
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
+import org.mockito.Mockito;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 //import org.junit.jupiter.api.BeforeEach;
@@ -40,6 +44,8 @@ public class AccountControllerTest {
 
 	private static Account userAccount;
 	private static String userJWT;
+	private static String expiredUserJWT;
+	private static String expiredJWT;
 
 	@MockBean
 	private AccountService service;
@@ -51,6 +57,7 @@ public class AccountControllerTest {
 	public void setup() {
 		userAccount = new Account(99, "userName99", "password99", "James Madison", null, null, null, null);
 		userJWT = JwtService.createJWT(UUID.randomUUID().toString(), "ReViveBackend", String.valueOf(99), 600000L);
+		expiredUserJWT = JwtService.createJWT(UUID.randomUUID().toString(), "ReViveBackend", String.valueOf(99), 0L);
 	}
 
 	@Test
@@ -58,16 +65,20 @@ public class AccountControllerTest {
 		List<Account> accounts = new LinkedList<>();
 		accounts.add(new Account(1, "userName1", "password1", "George Washington", null, null, null, null));
 		accounts.add(new Account(2, "userName2", "password2", "John Adams", null, null, null, null));
+
 		for(int i=0; i<accounts.size();i++) {
 			accounts.get(i).setUsername(null);
 			accounts.get(i).setPassword(null);
 		}
 
+		System.out.println("accountsaccountsaccountsaccounts: " + accounts);
+
 		when(service.findAll()).thenReturn(accounts);
-		this.mockMvc.perform(get("/account/getall")
+		mockMvc.perform(get("/account/getall")
 			.contentType(MediaType.APPLICATION_JSON)
 			.header("Authorization", userJWT))
 
+			//.andDo(print())
 			.andExpect(status().isOk())
 			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 			.andExpect(jsonPath("$", hasSize(2)))
@@ -93,6 +104,7 @@ public class AccountControllerTest {
 			.contentType(MediaType.APPLICATION_JSON)
 			.header("Authorization", userJWT))
 
+			//.andDo(print())
 			.andExpect(status().isOk())
 			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 			.andExpect(jsonPath("$.userId", is(id)))
@@ -101,22 +113,45 @@ public class AccountControllerTest {
 			.andExpect(jsonPath("$.name", is("James Madison")));
 	}
 
-	//	@Test
-	//	public void testFindByUserIdNotFound() throws Exception {
-	//		// need expired token
-	//		String expiredUserJWT = JwtService.createJWT(UUID.randomUUID().toString(), "ReViveBackend", String.valueOf(99), -600000L);
-	//		int id = Integer.valueOf((String) JwtService.decodeJWT(expiredUserJWT).get("sub"));
-	//		doReturn(userAccount).when(service).findByUserId(id);
+	@Test
+	public void testFindByUserIdNotFound() throws Exception {
+		doReturn(userAccount).when(service).findByUserId(66);
 
-	//		userAccount.setUsername(null);
-	//		userAccount.setPassword(null);
+		userAccount.setUsername(null);
+		userAccount.setPassword(null);
 
-	//		mockMvc.perform(get("/account/findbyId")
-	//			.contentType(MediaType.APPLICATION_JSON)
-	//			.header("Authorization", expiredUserJWT))
+		mockMvc.perform(get("/account/findbyId")
+			.contentType(MediaType.APPLICATION_JSON)
+			.header("Authorization", userJWT))
 
-	//			// .andExpect(jsonPath("$").doesNotExist());
-	//			.andExpect(status().isNotFound());
-	//			// .andExpect(jsonPath("$.name", is("James Madison")));
-	//	}
+			//.andDo(print())
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.userId").doesNotExist())
+			.andExpect(jsonPath("$.username").doesNotExist())
+			.andExpect(jsonPath("$.password").doesNotExist())
+			.andExpect(jsonPath("$.name").doesNotExist());
+	}
+
+	//@Test
+	//public void testUpdateprofile() throws Exception {
+	//  Account accountPut = new Account("userName22", "password22", "Martha Washing", null, null, null, null);
+	//  Account accountSavedReturned = new Account(22, "userName22", "password22", "Martha Washing", null, null, null, null);
+	//  Account accountSavedUpdate = new Account(22, "userName22", "password22", "Martha Washington", null, null, null, null);
+	//  String updateUserJWT = JwtService.createJWT(UUID.randomUUID().toString(), "ReViveBackend", String.valueOf(22), 600000L);
+
+	//  doReturn(accountSavedReturned).when(service).findByUserId(22);
+	//  doReturn(accountSavedUpdate).when(service).merge(any());
+
+	//  mockMvc.perform(put("/account/updateprofile")
+	//    .contentType(MediaType.APPLICATION_JSON)
+	//    .header("Authorization", updateUserJWT)
+	//    .content(asJsonString(accountPut)))
+
+	//    .andExpect(status().isOk())
+	//    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+	//    .andExpect(jsonPath("$.userId", is(22)))
+	//    .andExpect(jsonPath("$.username", is("userName22")))
+	//    .andExpect(jsonPath("$.password", is("password22")))
+	//    .andExpect(jsonPath("$.name", is("Martha Washington")));
+	//}
 }
