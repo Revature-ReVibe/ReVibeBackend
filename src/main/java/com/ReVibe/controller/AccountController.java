@@ -78,6 +78,7 @@ public class AccountController {
 	}
 	
 
+
 	@PostMapping(path="/updateprofile", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public boolean updateprofile(@RequestBody Account account, @RequestHeader("Authorization") String jwt) {
 		try {
@@ -103,6 +104,7 @@ public class AccountController {
   			return false;
   	}
 	}
+
 
 	
 
