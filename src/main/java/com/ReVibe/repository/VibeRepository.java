@@ -7,8 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VibeRepository extends JpaRepository<Vibe, Integer>{
-
-    
+	
     public List<Vibe> findByAccountid(int accountId);
-    
+    //
 }

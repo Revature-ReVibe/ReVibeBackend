@@ -32,6 +32,7 @@ public class VibeController {
     public ResponseEntity <Vibe> save(@RequestBody Vibe vibe, @RequestHeader("Authorization") String jwt){
     	try {
             int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
+            vibe.setAccountid(id);
             return new ResponseEntity<>(this.vibeService.saveVibe(vibe), HttpStatus.CREATED);
         }catch(java.lang.NullPointerException e) {
             return null;
@@ -43,6 +44,7 @@ public class VibeController {
     public ResponseEntity <Vibe> saveReply(@RequestBody Vibe vibe, @RequestHeader("Authorization") String jwt){
     	try {
             int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
+            vibe.setAccountid(id);
             return new ResponseEntity<>(this.vibeService.saveReply(vibe, vibe.getParentVibe()), HttpStatus.CREATED);
         }catch(java.lang.NullPointerException e) {
             return null;
