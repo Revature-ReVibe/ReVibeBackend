@@ -12,7 +12,7 @@ vibepic varchar(500),
 vibemessage varchar(300),
 accountid int unsigned not null,
 parentvibe int,
-vibelike int unsigned,
+vibelike int unsigned not null,
 vibetimestamp TIMESTAMP,
 Foreign key (accountid) references account(accountid));
 
