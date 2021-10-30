@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -14,7 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.ReVibe.model.Account;
 import com.ReVibe.repository.AccountRepository;
-
+@Transactional
 @TestInstance(Lifecycle.PER_CLASS)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -71,20 +73,20 @@ public class AccountRepositoryTest {
 		
 		assertEquals(1, accounts.size());
 	}
-// Need to come back to this test throwing an exception not sure how to handle it
-//	@Test
-//	public void testSetAccountInfoByUserId() {
-//		String name = "name";
-//		String password = "password";
-//		String username = "username";
-//		String profilepic = " ";
-//		int id = 2;
-//		
-//		accountRepository.setAccountInfoByUserId(name, password, username, profilepic, id);
-//		
-//		
-//	}
-//	
+
+	@Test
+	public void testSetAccountInfoByUserId() {
+		String name = "name";
+		String password = "password";
+		String username = "username";
+		String profilepic = " ";
+		int id = 2;
+		
+		accountRepository.setAccountInfoByUserId(name, password, username, profilepic, id);
+		
+		
+	}
+	
 	@Test
 	public void testSaveAccount() {
 		Account account = new Account();
