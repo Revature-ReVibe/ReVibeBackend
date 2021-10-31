@@ -1,9 +1,16 @@
 package com.ReVibe.controller;
 
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 //import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -32,6 +39,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -91,6 +100,7 @@ public class AccountControllerTest {
 		.andExpect(jsonPath("$[1].username", nullValue()))
 		.andExpect(jsonPath("$[1].password", nullValue()))
 		.andExpect(jsonPath("$[1].name", is("John Adams")));
+		verify(accountService,times(1)).findAll();
 	}	
 
 	@Test
@@ -101,6 +111,7 @@ public class AccountControllerTest {
 		.andExpect(status().isOk())
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 		.andExpect(jsonPath("$.userId", is(1)));
+		verify(accountService,times(1)).findByUserId(Mockito.anyInt());
 	}
 
 	@Test
@@ -111,73 +122,85 @@ public class AccountControllerTest {
 		.andExpect(status().isOk())
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 		.andExpect(jsonPath("$.userId", is(1)));
+		verify(accountService,times(1)).findByName(Mockito.any(String.class));
 	}
 	
 	@Test
-	public void testUpdateProfile() {
-		Account account = new Account(1,"userName","password","MyName", null, null, null, null);
-		//accountService = mock(AccountService.class);
-		//AccountService newAccount = mock(AccountService.class);
-		doNothing().when(accountService).merge((Account) isA(Account.class));
-		//this.mockMvc.perform())		
+	public void testUpdateProfile() throws Exception {
+		when(accountService.findByUserId(Mockito.anyInt())).thenReturn(new Account());
+		this.mockMvc.perform(post("/account/updateprofile").header("Authorization", jwtService.createJWT("abc", "def", "100", 10000)).contentType(MediaType.APPLICATION_JSON)
+				 .content("{ \n"
+				 		+ "\"name\""
+				 		+ ":"
+				 		+ "\"a\", \n"
+				 		+ "\"password\""
+				 		+ ":"
+				 		+ "\"p\", \n"
+				 		+ "\"username\""
+				 		+ ":"
+				 		+ "\"u\" \n"
+				 		+ "}")
+				);
+		verify(accountService,times(1)).merge(Mockito.any(Account.class));
 	}
 	
-	// @Test
-	// @DisplayName("PUT /account/updateprofile/{id} Success")
-	// public void testUpdateprofile() throws Exception {
-	//  Account accountPut = new Account("userName1", "password1", "Martha Washing", null, null, null, null);
-	//  Account accountSavedReturned = new Account(1, "userName1", "password1", "Martha Washing", null, null, null, null);
-	//  Account accountSavedUpdate = new Account(1, "userName1", "password1", "Martha Washington", null, null, null, null);
-	//  doReturn(Optional.of(accountSavedReturned)).when(service).findByUserId(1);
-	//  doReturn(accountSavedUpdate).when(service).merge(any());
-	//  mockMvc.perform(put("/account/updateprofile/{id}", 1)
-	//    .contentType(MediaType.APPLICATION_JSON)
-	//    .content(asJsonString(accountPut)))
-	//    .andExpect(status().isOk())
-	//    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-	//    .andExpect(jsonPath("$.userId", is(1)))
-	//    .andExpect(jsonPath("$.username", is("userName1")))
-	//    .andExpect(jsonPath("$.password", is("password1")))
-	//    .andExpect(jsonPath("$.name", is("Martha Washington")))
-	// }
-
-	// @Test
-	// @DisplayName("PUT /account/updateprofile/{id} Conflict")
-	// void testUpdateprofileConflict() throws Exception {
-	//  Account accountPut = new Account("userName1", "password1", "Martha Washing", null, null, null, null);
-	//  Account accountReturned = new Account(1, "userName1", "password1", "Martha Washing", null, null, null, null);
-	//  doReturn(Optional.of(accountReturned)).when(service).findByUserId(1);
-	//  doReturn(accountReturned).when(service).merge(any());
-	//  mockMvc.perform(put("/account/updateprofile/{id}", 1)
-	//    .contentType(MediaType.APPLICATION_JSON)
-	//    .content(asJsonString(accountPut)))
-	//    .andExpect(status().isConflict());
-	// }
-
-	// @Test
-	// @DisplayName("PUT /account/updateprofile/{id} Not Found")
-	// void testUpdateprofileNotFound() throws Exception {
-	//  Account accountPut = new Account("userName1", "password1", "Martha Washing", null, null, null, null);
-	//  doReturn(Optional.empty()).when(service).findByUserId(1);
-	//  mockMvc.perform(put("/account/updateprofile/{id}", 1)
-	//    .contentType(MediaType.APPLICATION_JSON)
-	//    .content(asJsonString(accountPut)))
-	//    .andExpect(status().isNotFound());
-	// }
-
-	// @Test
-	// @DisplayName("POST /account/new")
-	// public void testSaveAccount() throws Exception {
-	//  Account accountNew = new Account("userName1", "password1", "George Washington", null, null, null, null);
-	//  Account accountSaved = new Account(1, "userName1", "password1", "George Washington", null, null, null, null);
-	//  doReturn(accountSaved).when(service).saveAccount(any());
-	//  mockMvc.perform(post("/account/new")
-	//    .contentType(MediaType.APPLICATION_JSON)
-	//    .content(asJsonString(accountNew)))
-	//    .andExpect(status().isCreated())
-	//    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-	//    .andExpect(jsonPath("$.userId", is(1)))
-	//    .andExpect(jsonPath("$.username", is("userName1")))
-	//    .andExpect(jsonPath("$.password", is("password1")))
-	// }
+	@Test
+	public void testSearchAccount() throws Exception {
+		List<Account> accounts = new LinkedList<>();
+		accounts.add(new Account(1, "userName1", "password1", "Name1", null, null, null, null));
+		accounts.add(new Account(2, "userName2", "password2", "Name2", null, null, null, null));
+		
+		when(accountService.findBySearchName(Mockito.any(String.class))).thenReturn(accounts);
+		this.mockMvc.perform(get("/account/searchaccounts").header("Authorization", jwtService.createJWT("abc", "def", "100", 10000)).contentType(MediaType.APPLICATION_JSON)
+				 .content("{ \n"
+				 		+ "\"name\""
+				 		+ ":"
+				 		+ "\"c\" \n"
+				 		+ "}")
+				);
+		verify(accountService,times(1)).findBySearchName(Mockito.anyString());
+	}
+	
+	@Test
+	public void testResetPass() throws Exception {
+		Account account = new Account();
+		when(accountService.findByEmail(Mockito.any(String.class))).thenReturn(account);
+		when(accountService.findByUserId(Mockito.anyInt())).thenReturn(account);
+		this.mockMvc.perform(post("/account/resetpass").contentType(MediaType.APPLICATION_JSON)
+				 .content("{ \n"
+				 		+ "\"username\""
+				 		+ ":"
+				 		+ "\"aUserName\", \n"
+				 		+ "\"password\""
+				 		+ ":"
+				 		+ "\"aPassWord\", \n"
+				 		+ "\"email\""
+				 		+ ":"
+				 		+ "\"isthisanemail@yahoo.com\", \n"
+				 		+ "\"name\""
+				 		+ ":"
+				 		+ "\"aName\" \n"
+				 		+ "}")
+				);
+		verify(accountService,times(1)).findByEmail(Mockito.anyString());
+	}
+	@Test
+	public void testSaveAccount() throws Exception {
+		Account account = new Account(0,"userName","password","MyName", null, null, null, null);
+		when(accountService.saveAccount(Mockito.any(Account.class))).thenReturn(account);
+		this.mockMvc.perform(post("/account/new").contentType(MediaType.APPLICATION_JSON)
+				 .content("{ \n"
+				 		+ "\"username\""
+				 		+ ":"
+				 		+ "\"userName\", \n"
+				 		+ "\"password\""
+				 		+ ":"
+				 		+ "\"password\", \n"
+				 		+ "\"name\""
+				 		+ ":"
+				 		+ "\"MyName\" \n"
+				 		+ "}")
+				);
+		verify(accountService,times(1)).saveAccount(account);
+	}
 }
