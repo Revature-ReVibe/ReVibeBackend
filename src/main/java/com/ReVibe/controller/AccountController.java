@@ -3,13 +3,8 @@ package com.ReVibe.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.Random;
+
 import com.ReVibe.model.Account;
 import com.ReVibe.service.AccountService;
 import com.ReVibe.service.JwtService;
@@ -55,19 +50,19 @@ public class AccountController {
   			return null;
   		}
 	}
-  
-	@GetMapping(path = "/findbyId", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Account findByUserId(@RequestHeader("Authorization") String jwt) {
-		try {
-		Object id = JwtService.decodeJWT(jwt).get("sub");
-		Account account = this.accountService.findByUserId( Integer.valueOf((String)id));
-		account.setUsername(null);
-		account.setPassword(null);
-		return account;
-		}catch(io.jsonwebtoken.ExpiredJwtException e) {
-			return null;
-		}
-	}
+
+  @GetMapping(path = "/findbyId", produces = MediaType.APPLICATION_JSON_VALUE)
+  public Account findByUserId(@RequestHeader("Authorization") String jwt) {
+    try {
+      Object id = JwtService.decodeJWT(jwt).get("sub");
+      Account account = this.accountService.findByUserId( Integer.valueOf((String)id));
+      account.setUsername(null);
+      account.setPassword(null);
+      return account;
+    }catch(java.lang.NullPointerException e) {
+      return null;
+    }
+  }
 
 	@GetMapping(path = "/name", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Account findByName(@RequestParam String name,@RequestHeader("Authorization") String jwt) {
@@ -83,11 +78,13 @@ public class AccountController {
 	}
 	
 
+
 	@PostMapping(path="/updateprofile", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public boolean updateprofile(@RequestBody Account account, @RequestHeader("Authorization") String jwt) {
 		try {
 		  	int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
 		Account currentAccount = this.accountService.findByUserId(id);
+		account.setUserId(id);
 		if(account.getName() == "") {
 			account.setName(currentAccount.getName());
 		}
@@ -107,6 +104,7 @@ public class AccountController {
   			return false;
   	}
 	}
+
 
 	
 

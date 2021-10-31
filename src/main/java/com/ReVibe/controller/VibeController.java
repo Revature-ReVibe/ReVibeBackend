@@ -1,6 +1,5 @@
 package com.ReVibe.controller;
 
-import com.ReVibe.model.Account;
 import com.ReVibe.model.Like;
 import java.util.List;
 
@@ -19,8 +18,6 @@ import com.ReVibe.model.Vibe;
 import com.ReVibe.service.JwtService;
 import com.ReVibe.service.VibeService;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController("vibeController") @RequestMapping("/vibe")
 public class VibeController {
@@ -35,6 +32,7 @@ public class VibeController {
     public ResponseEntity <Vibe> save(@RequestBody Vibe vibe, @RequestHeader("Authorization") String jwt){
     	try {
             int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
+            vibe.setAccountid(id);
             return new ResponseEntity<>(this.vibeService.saveVibe(vibe), HttpStatus.CREATED);
         }catch(java.lang.NullPointerException e) {
             return null;
@@ -46,6 +44,7 @@ public class VibeController {
     public ResponseEntity <Vibe> saveReply(@RequestBody Vibe vibe, @RequestHeader("Authorization") String jwt){
     	try {
             int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
+            vibe.setAccountid(id);
             return new ResponseEntity<>(this.vibeService.saveReply(vibe, vibe.getParentVibe()), HttpStatus.CREATED);
         }catch(java.lang.NullPointerException e) {
             return null;
@@ -73,7 +72,7 @@ public class VibeController {
         }
     }
 
-    @GetMapping(path="/like/{vibeId}", produces=MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path="/like/{vibeId}")
     public ResponseEntity <Like> like(@PathVariable int vibeId, @RequestHeader("Authorization") String jwt){
         try {
             int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
@@ -97,7 +96,7 @@ public class VibeController {
     public ResponseEntity<List<Like>> getAllLikes(@PathVariable int vibeId, @RequestHeader("Authorization") String jwt){
         try {
             int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
-            return new ResponseEntity<>(this.vibeService.findByVibeId(vibeId), HttpStatus.OK);
+            return new ResponseEntity<>(this.vibeService.findLikesByVibeId(vibeId), HttpStatus.OK);
         }catch(java.lang.NullPointerException e) {
             return null;
         }
