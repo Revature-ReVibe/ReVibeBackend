@@ -1,4 +1,3 @@
-
 package com.ReVibe.controller;
 
 import java.util.List;
@@ -26,6 +25,12 @@ import com.ReVibe.service.JwtService;
 public class AccountController {
 
 	private AccountService accountService;
+        
+        /**
+         * Constructor for AccountController
+         * @param accountService    the AccountService instance used to access
+         *                          the service layer of the application
+         */
 	@Autowired
 	public AccountController(AccountService accountService) {
 		this.accountService = accountService;
@@ -100,7 +105,8 @@ public class AccountController {
          * This method updates the information of the current account.
          * @param account   the account object containing the new data values
          * @param jwt       the string to be decoded, used for login authorization
-         * @return          <code>true</code> 
+         * @return          <code>true</code> if the user is logged in;
+         *                  <code>false</code> otherwise.
          */
 	@PostMapping(path="/updateprofile", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public boolean updateprofile(@RequestBody Account account, @RequestHeader("Authorization") String jwt) {
@@ -134,7 +140,8 @@ public class AccountController {
          * This method searches for accounts by name.
          * @param account       the account object with the name to be searched
          * @param jwt           the string to be decoded, used for login authorization
-         * @return              the list of accounts with the desired name.
+         * @return              the list of accounts with the desired name;
+         *                      <code>null</code> otherwise.
          */
 	@GetMapping(path="/searchaccounts", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public List<Account> searchAccounts(@RequestBody Account account,@RequestHeader("Authorization") String jwt){
@@ -152,9 +159,12 @@ public class AccountController {
 	}//searchAccounts(
         
 	/**
-         * 
-         * @param account
-         * @return 
+         * This method allows the user to reset the password associated with 
+         * this account object.
+         * @param account       the account the user wishes to login to, passed
+         *                      as JSON in the body of the request.
+         * @return              <code>true</code> if the account exists;
+         *                      <code>false</code> otherwise.
          */
 	@PostMapping(path = "/resetpass", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public boolean resetPass(@RequestBody Account account) {
@@ -177,23 +187,25 @@ public class AccountController {
 			return true;
 		}catch(java.lang.NullPointerException e) {
   			return false;
-  	}
-	}
+                }//catch
+	}//resetPass(Account)
 	
         /**
-         * 
-         * @param account
-         * @return 
+         * This method saves the account to the database.
+         * @param account       the account object to be saved, passed as
+         *                      JSON in the body of the request.
+         * @return              the account object that was saved;
+         *                      <code>null</code> otherwise.
          */
 	@PostMapping(path = "/new", consumes = MediaType.APPLICATION_JSON_VALUE) 
 	public Account saveAccount(@RequestBody Account account) {
 		try {
-		account= this.accountService.saveAccount(account);
+                        account= this.accountService.saveAccount(account);
 		}catch(org.springframework.dao.DataIntegrityViolationException e) {
 			return null;
-		}
+		}//catch
 		return account;
-	}
+	}//saveAccount(Account)
 	
-}
+}//AccountController
 
