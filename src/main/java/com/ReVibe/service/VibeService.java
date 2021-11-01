@@ -45,7 +45,12 @@ public class VibeService {
     
     public List<Vibe> findAll(){
         log.info("Finding all vibes");
-        return vibeRepository.findAll();
+        List<Vibe> vibes = vibeRepository.findAll();
+        
+        vibes.forEach(v -> {
+            v.setReplyVibes(vibeRepository.findByParentVibe(v.getVibeId()));
+        });
+        return vibes;
     }
 
     public Like like(int vibeId, int accountId) {
