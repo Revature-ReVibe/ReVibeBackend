@@ -10,4 +10,5 @@ public interface VibeRepository extends JpaRepository<Vibe, Integer>{
     List<Vibe> findByParentVibe(int parentVibe);
     List<Vibe> findByAccountid(int accountId);
     List<Vibe> findByParentVibeNull();
+
 }
