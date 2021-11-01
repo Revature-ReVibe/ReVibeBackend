@@ -27,7 +27,7 @@ public class AccountController {
 	private AccountService accountService;
         
         /**
-         * Constructor for AccountController
+         * Constructor
          * @param accountService    the AccountService instance used to access
          *                          the service layer of the application
          */
@@ -41,10 +41,11 @@ public class AccountController {
 
 	
         /**
-         * This method finds all the accounts.
-         * @param jwt       the string to be decoded, used for login authorization
-         * @return          the list of account objects found;
-         *                  <code>null</code> otherwise.
+         * This method finds all the Accounts.
+         * @param jwt   the String to be decoded,
+         *              used for login authorization
+         * @return      the list of Account objects found;
+         *              <code>null</code> otherwise.
          */
   	@GetMapping(path = "/getall", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Account> getall(@RequestHeader("Authorization") String jwt){
@@ -62,10 +63,11 @@ public class AccountController {
 	}//getall(String)
 
         /**
-         * This method finds an account via decoded id.
-         * @param jwt       the string to be decoded, used for login authorization
-         * @return          the account object found;
-         *                  <code>null</code> otherwise.
+         * This method finds an Account via decoded id.
+         * @param jwt   the String to be decoded,
+         *              used for login authorization
+         * @return      the Account object found;
+         *              <code>null</code> otherwise.
          */
         @GetMapping(path = "/findbyId", produces = MediaType.APPLICATION_JSON_VALUE)
         public Account findByUserId(@RequestHeader("Authorization") String jwt) {
@@ -81,11 +83,12 @@ public class AccountController {
         }//findByuserId(String)
 
         /**
-         * This method finds an account via the provided name.
-         * @param name      the string containing the name
-         * @param jwt       the string to be decoded, used for login authorization
-         * @return          the account object found;
-         *                  <code>null</code> otherwise.
+         * This method finds an Account via the provided name.
+         * @param name  the String containing the name
+         * @param jwt   the String to be decoded,
+         *              used for login authorization
+         * @return      the Account object found;
+         *              <code>null</code> otherwise.
          */
 	@GetMapping(path = "/name", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Account findByName(@RequestParam String name,@RequestHeader("Authorization") String jwt) {
@@ -99,12 +102,12 @@ public class AccountController {
                         return null;
 	  	}//catch
 	}//findByName(String, String)
-	
 
         /**
-         * This method updates the information of the current account.
-         * @param account   the account object containing the new data values
-         * @param jwt       the string to be decoded, used for login authorization
+         * This method updates the information of the current Account.
+         * @param account   the Account object containing the new data values
+         * @param jwt       the String to be decoded,
+         *                  used for login authorization
          * @return          <code>true</code> if the user is logged in;
          *                  <code>false</code> otherwise.
          */
@@ -133,15 +136,15 @@ public class AccountController {
   			return false;
                 }//catch
 	}//updateprofile(Account, String)
-
-
 	
         /**
-         * This method searches for accounts by name.
-         * @param account       the account object with the name to be searched
-         * @param jwt           the string to be decoded, used for login authorization
-         * @return              the list of accounts with the desired name;
-         *                      <code>null</code> otherwise.
+         * This method searches for Accounts by name.
+         * @param account   the Account object with the name to be searched,
+         *                  passed as JSON in the body of the request.
+         * @param jwt       the String to be decoded,
+         *                  used for login authorization
+         * @return          the list of Account objects with the desired name;
+         *                  <code>null</code> otherwise.
          */
 	@GetMapping(path="/searchaccounts", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public List<Account> searchAccounts(@RequestBody Account account,@RequestHeader("Authorization") String jwt){
@@ -156,15 +159,15 @@ public class AccountController {
 		}catch(java.lang.NullPointerException e) {
   			return null;
                 }//catch
-	}//searchAccounts(
+	}//searchAccounts(Account, String)
         
 	/**
          * This method allows the user to reset the password associated with 
-         * this account object.
-         * @param account       the account the user wishes to login to, passed
-         *                      as JSON in the body of the request.
-         * @return              <code>true</code> if the account exists;
-         *                      <code>false</code> otherwise.
+         * this Account.
+         * @param account   the Account object the user wishes to login to
+         *                  passed as JSON in the body of the request.
+         * @return          <code>true</code> if the Account exists;
+         *                  <code>false</code> otherwise.
          */
 	@PostMapping(path = "/resetpass", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public boolean resetPass(@RequestBody Account account) {
@@ -191,11 +194,11 @@ public class AccountController {
 	}//resetPass(Account)
 	
         /**
-         * This method saves the account to the database.
-         * @param account       the account object to be saved, passed as
-         *                      JSON in the body of the request.
-         * @return              the account object that was saved;
-         *                      <code>null</code> otherwise.
+         * This method saves the Account.
+         * @param account   the Account object to be saved, passed as
+         *                  JSON in the body of the request.
+         * @return          the Account object that was saved;
+         *                  <code>null</code> otherwise.
          */
 	@PostMapping(path = "/new", consumes = MediaType.APPLICATION_JSON_VALUE) 
 	public Account saveAccount(@RequestBody Account account) {
