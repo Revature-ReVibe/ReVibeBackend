@@ -58,7 +58,7 @@ public class VibeControllerTest {
 
 		when(vibeService.saveVibe(Mockito.any(Vibe.class))).thenReturn(newVibe);
 
-		this.mockMvc.perform(post("/vibe/createVibe").contentType(MediaType.APPLICATION_JSON)
+		this.mockMvc.perform(post("/vibe/createVibe")
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(asJsonString(newVibe))
 			.header("Authorization", JwtService.createJWT("abc", "def", "3", 10000)))
@@ -70,6 +70,27 @@ public class VibeControllerTest {
 			.andExpect(jsonPath("$.accountid", is(3)));
 
 		verify(vibeService,times(1)).saveVibe(newVibe);
+	}
+
+	@Test
+	public void testCreateReply() throws Exception {
+		Vibe newReplyVibe = new Vibe(1, "pic", "message", null, null, 3, 10, null, null);
+
+		when(vibeService.saveReply(newReplyVibe, newReplyVibe.getParentVibe())).thenReturn(newReplyVibe);
+
+		this.mockMvc.perform(post("/vibe/createReply")
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(asJsonString(newReplyVibe))
+			.header("Authorization", JwtService.createJWT("abc", "def", "3", 10000)))
+
+			.andDo(print())
+			.andExpect(status().isCreated())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("$.vibeId", is(1)))
+			.andExpect(jsonPath("$.accountid", is(3)))
+			.andExpect(jsonPath("$.parentVibe", is(10)));
+
+		verify(vibeService,times(1)).saveReply(Mockito.any(Vibe.class),Mockito.any(Integer.class));
 	}
 
 	@Test
