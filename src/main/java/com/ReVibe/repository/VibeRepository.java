@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface VibeRepository extends JpaRepository<Vibe, Integer>{
 	
     public List<Vibe> findByAccountid(int accountId);
-    //
+    public List<Vibe> findByParentVibe(int parentVibe);
 }

@@ -29,100 +29,133 @@ public class AccountController {
 	@Autowired
 	public AccountController(AccountService accountService) {
 		this.accountService = accountService;
-	}
+	}//AccountController(AccountService)
 	
 	@Autowired
 	private JavaMailSender mailSender;
 
 	
-
+        /**
+         * This method finds all the accounts.
+         * @param jwt       the string to be decoded, used for login authorization
+         * @return          the list of account objects found;
+         *                  <code>null</code> otherwise.
+         */
   	@GetMapping(path = "/getall", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Account> getall(@RequestHeader("Authorization") String jwt){
-  		try {
-  		int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
-		List<Account> account = this.accountService.findAll();
-		for(int i=0; i<account.size();i++) {
-			account.get(i).setUsername(null);
-			account.get(i).setPassword(null);
-		}
-		return account;
+                try {
+                        int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
+                        List<Account> account = this.accountService.findAll();
+                        for(int i=0; i<account.size();i++) {
+                                account.get(i).setUsername(null);
+                                account.get(i).setPassword(null);
+                        }//for
+                        return account;
   		}catch(java.lang.NullPointerException e) {
   			return null;
-  		}
-	}
+  		}//catch
+	}//getall(String)
 
-  @GetMapping(path = "/findbyId", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Account findByUserId(@RequestHeader("Authorization") String jwt) {
-    try {
-      Object id = JwtService.decodeJWT(jwt).get("sub");
-      Account account = this.accountService.findByUserId( Integer.valueOf((String)id));
-      account.setUsername(null);
-      account.setPassword(null);
-      return account;
-    }catch(java.lang.NullPointerException e) {
-      return null;
-    }
-  }
+        /**
+         * This method finds an account via decoded id.
+         * @param jwt       the string to be decoded, used for login authorization
+         * @return          the account object found;
+         *                  <code>null</code> otherwise.
+         */
+        @GetMapping(path = "/findbyId", produces = MediaType.APPLICATION_JSON_VALUE)
+        public Account findByUserId(@RequestHeader("Authorization") String jwt) {
+                try {
+                        Object id = JwtService.decodeJWT(jwt).get("sub");
+                        Account account = this.accountService.findByUserId( Integer.valueOf((String)id));
+                        account.setUsername(null);
+                        account.setPassword(null);
+                        return account;
+                }catch(java.lang.NullPointerException e) {
+                        return null;
+                }//catch
+        }//findByuserId(String)
 
+        /**
+         * This method finds an account via the provided name.
+         * @param name      the string containing the name
+         * @param jwt       the string to be decoded, used for login authorization
+         * @return          the account object found;
+         *                  <code>null</code> otherwise.
+         */
 	@GetMapping(path = "/name", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Account findByName(@RequestParam String name,@RequestHeader("Authorization") String jwt) {
 	  	try {
-	  	int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
-		Account account = this.accountService.findByName(name);
-		account.setUsername(null);
-		account.setPassword(null);
-		return account;
+                        int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
+                        Account account = this.accountService.findByName(name);
+                        account.setUsername(null);
+                        account.setPassword(null);
+                        return account;
 	  	}catch(java.lang.NullPointerException e) {
-	  			return null;
-	  	}
-	}
+                        return null;
+	  	}//catch
+	}//findByName(String, String)
 	
 
-
+        /**
+         * This method updates the information of the current account.
+         * @param account   the account object containing the new data values
+         * @param jwt       the string to be decoded, used for login authorization
+         * @return          <code>true</code> 
+         */
 	@PostMapping(path="/updateprofile", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public boolean updateprofile(@RequestBody Account account, @RequestHeader("Authorization") String jwt) {
 		try {
 		  	int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
-		Account currentAccount = this.accountService.findByUserId(id);
-		account.setUserId(id);
-		if(account.getName() == "") {
-			account.setName(currentAccount.getName());
-		}
-		if(account.getPassword()== "") {
-			account.setPassword(currentAccount.getPassword());
-		}
-		if(account.getUsername()== "") {
-			account.setUsername(currentAccount.getUsername());  
-		}
-		if(account.getProfilePic()== "") {
-			account.setProfilePic(currentAccount.getProfilePic());
-		}
-		this.accountService.merge(account);
-		System.out.println(account);
-		return true;
+                        Account currentAccount = this.accountService.findByUserId(id);
+                        account.setUserId(id);
+                        if(account.getName() == "") {
+                                account.setName(currentAccount.getName());
+                        }//if account.getName is empty
+                        if(account.getPassword()== "") {
+                                account.setPassword(currentAccount.getPassword());
+                        }//if account.getPassword is empty
+                        if(account.getUsername()== "") {
+                                account.setUsername(currentAccount.getUsername());  
+                        }//if account.getUsername is empty
+                        if(account.getProfilePic()== "") {
+                                account.setProfilePic(currentAccount.getProfilePic());
+                        }//if account.getProfilePic is empty
+                        this.accountService.merge(account);
+                        System.out.println(account);
+                        return true;
 		}catch(java.lang.NullPointerException e) {
   			return false;
-  	}
-	}
+                }//catch
+	}//updateprofile(Account, String)
 
 
 	
-
+        /**
+         * This method searches for accounts by name.
+         * @param account       the account object with the name to be searched
+         * @param jwt           the string to be decoded, used for login authorization
+         * @return              the list of accounts with the desired name.
+         */
 	@GetMapping(path="/searchaccounts", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public List<Account> searchAccounts(@RequestBody Account account,@RequestHeader("Authorization") String jwt){
 		try {
 		  	int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
-		List<Account> accounts = this.accountService.findBySearchName(account.getName());
-		for(int i=0; i< accounts.size(); i++) {
-			accounts.get(i).setUsername(null);
-			accounts.get(i).setPassword(null);
-		}
-		return accounts;
+                        List<Account> accounts = this.accountService.findBySearchName(account.getName());
+                        for(int i=0; i< accounts.size(); i++) {
+                                accounts.get(i).setUsername(null);
+                                accounts.get(i).setPassword(null);
+                        }//for
+                        return accounts;
 		}catch(java.lang.NullPointerException e) {
   			return null;
-  	}
-	}
-	
+                }//catch
+	}//searchAccounts(
+        
+	/**
+         * 
+         * @param account
+         * @return 
+         */
 	@PostMapping(path = "/resetpass", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public boolean resetPass(@RequestBody Account account) {
 		try {
@@ -147,6 +180,11 @@ public class AccountController {
   	}
 	}
 	
+        /**
+         * 
+         * @param account
+         * @return 
+         */
 	@PostMapping(path = "/new", consumes = MediaType.APPLICATION_JSON_VALUE) 
 	public Account saveAccount(@RequestBody Account account) {
 		try {
