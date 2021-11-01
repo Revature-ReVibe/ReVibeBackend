@@ -1,6 +1,5 @@
 package com.ReVibe.controller;
 
-import com.ReVibe.model.Account;
 import com.ReVibe.model.Like;
 import java.util.List;
 
@@ -83,7 +82,7 @@ public class VibeController {
         }
     }
 
-    @GetMapping(path="/like/{vibeId}", produces=MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path="/like/{vibeId}")
     public ResponseEntity <Like> like(@PathVariable int vibeId, @RequestHeader("Authorization") String jwt){
         try {
             int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));

@@ -8,7 +8,6 @@ import com.ReVibe.repository.VibeRepository;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
 import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ public class VibeService {
         vibe.setDate(timeStamp);
         vibe.setVibeLike(0);
         Vibe newVibe = vibeRepository.save(vibe);
-    	log.info("{} saved", newVibe);
+    	  log.info("{} saved", newVibe);
         return newVibe;
     }
     
@@ -52,11 +51,13 @@ public class VibeService {
     	Vibe reply = vibeRepository.save(vibe);
         //parentVibe.getReplyVibes().add(reply);
     	log.info("{} saved", reply);
+
     	return reply;
     }
     
     public Vibe findById(int id){
-        log.info("Finding vibe with id{}", id);
+
+        log.info("Finding vibe with id {}", id);
         return vibeRepository.findById(id).get();
     }
     
@@ -93,6 +94,7 @@ public class VibeService {
     
     public List<Like> findLikesByVibeId(int vibeId){
         log.info("Find all likes for vibe {}", vibeId);
+
         return likeRepository.findByVibeId(vibeId);
     }
 	

@@ -41,14 +41,14 @@ public class Vibe {
 	@Column(name = "vibemessage")
 	private String vibeMessage;
 	@Column(name = "vibelike")
-	private Integer vibeLike;
+	private int vibeLike;
 	@OneToMany
 	@JoinColumn(name = "vibeid")
 	private List<Like> likes;
 	@Column(name = "accountid")
 	private int accountid;
 	@Column(name = "parentvibe")
-	private Integer parentVibe;
+	private int parentVibe;
 	
 	@Column(name = "vibetimestamp")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
