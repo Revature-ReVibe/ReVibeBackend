@@ -19,8 +19,6 @@ import com.ReVibe.model.Vibe;
 import com.ReVibe.service.JwtService;
 import com.ReVibe.service.VibeService;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController("vibeController") @RequestMapping("/vibe")
 public class VibeController {
@@ -35,18 +33,20 @@ public class VibeController {
     public ResponseEntity <Vibe> save(@RequestBody Vibe vibe, @RequestHeader("Authorization") String jwt){
     	try {
             int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
+            vibe.setAccountid(id);
             return new ResponseEntity<>(this.vibeService.saveVibe(vibe), HttpStatus.CREATED);
         }catch(java.lang.NullPointerException e) {
             return null;
         }
-       
+
     }
     
-    @PostMapping(path="/createReply", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity <Vibe> saveReply(@RequestBody Vibe replyVibe,@RequestParam int parentVibe, @RequestHeader("Authorization") String jwt){
+    @PostMapping(path="/createReply/{parentVibe}", consumes=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity <Vibe> saveReply(@RequestBody Vibe vibe,@PathVariable int parentVibe, @RequestHeader("Authorization") String jwt){
     	try {
             int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
-            return new ResponseEntity<>(this.vibeService.saveReply(replyVibe, parentVibe), HttpStatus.CREATED);
+            vibe.setAccountid(id);
+            return new ResponseEntity<>(this.vibeService.saveReply(vibe, parentVibe), HttpStatus.CREATED);
         }catch(java.lang.NullPointerException e) {
             return null;
         }
@@ -73,8 +73,8 @@ public class VibeController {
         }
     }
     
-    @GetMapping(path="/allReplies", produces=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Vibe>> findAllReplies(@RequestParam int parentVibe, @RequestHeader("Authorization") String jwt){
+    @GetMapping(path="/allReplies/{parentVibe}", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Vibe>> findAllReplies(@PathVariable int parentVibe, @RequestHeader("Authorization") String jwt){
     	try {
             int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
             return new ResponseEntity<>(this.vibeService.findByParentVibe(parentVibe), HttpStatus.OK);
@@ -107,7 +107,7 @@ public class VibeController {
     public ResponseEntity<List<Like>> getAllLikes(@PathVariable int vibeId, @RequestHeader("Authorization") String jwt){
         try {
             int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
-            return new ResponseEntity<>(this.vibeService.findByVibeId(vibeId), HttpStatus.OK);
+            return new ResponseEntity<>(this.vibeService.findLikesByVibeId(vibeId), HttpStatus.OK);
         }catch(java.lang.NullPointerException e) {
             return null;
         }
