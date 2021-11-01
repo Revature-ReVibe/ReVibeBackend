@@ -44,7 +44,7 @@ public class AccountService {
 
 	public void merge(Account account) {
 		log.info("Merge {} ", account);
-		this.accountRepository.setAccountInfoByUserId(account.getName(),account.getPassword(),account.getUsername(),account.getProfilePic(),account.getEmail());
+		this.accountRepository.setAccountInfoByUserId(account.getName(),account.getPassword(),account.getUsername(),account.getProfilePic(),account.getUserId());
 	}
 
 

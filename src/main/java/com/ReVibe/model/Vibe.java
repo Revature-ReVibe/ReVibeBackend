@@ -1,5 +1,6 @@
 package com.ReVibe.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,7 +43,7 @@ public class Vibe {
 	@Column(name = "vibelike")
 	private int vibeLike;
 	@OneToMany
-	@JoinColumn(name = "likeid")
+	@JoinColumn(name = "vibeid")
 	private List<Like> likes;
 	@Column(name = "accountid")
 	private int accountid;
@@ -48,7 +51,8 @@ public class Vibe {
 	private int parentVibe;
 	
 	@Column(name = "vibetimestamp")
-	Date date;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
+	LocalDateTime date;
 
 	@Transient
 	private List<Vibe> replyVibes;
