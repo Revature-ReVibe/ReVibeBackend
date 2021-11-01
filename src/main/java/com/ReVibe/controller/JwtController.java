@@ -18,7 +18,6 @@ import com.ReVibe.service.AccountService;
 import com.ReVibe.service.JwtService;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 
 @RestController
 @RequestMapping("/jwt")
@@ -29,6 +28,13 @@ public class JwtController {
 	@Autowired
 	private AccountService accountservice;
 	
+        /**
+         * This method allows the user to log-in to an Account, given an Account
+         * with the provided username and password exists.
+         * @param account   the Account object with the username and password
+         *                  to be verified
+         * @return          the
+         */
 	@PostMapping("/login")
 	public ResponseEntity<String> logUserIn(@RequestBody Account account) {
             account = this.accountservice.findByUsernameAndPassword(account.getUsername(), account.getPassword());
@@ -39,6 +45,11 @@ public class JwtController {
             return null;
 	}
 	
+        /**
+         * 
+         * @param jwt
+         * @return 
+         */
 	@GetMapping("/authenticate")
 	public Boolean isLoggedIn(@RequestHeader("Authorization") String jwt) {
 		try {
