@@ -3,15 +3,6 @@ package com.ReVibe.stepDefinition;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.concurrent.TimeUnit;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.runner.RunWith;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -22,11 +13,11 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.cucumber.testng.CucumberOptions;
+import io.cucumber.junit.platform.engine.Cucumber;
 
 
-//@RunWith(Cucumber.class)
-//@CucumberOptions
+
+@Cucumber
 public class LogInFeature {
 	private WebDriver driver;
 	private LogInPOM loginpage;
