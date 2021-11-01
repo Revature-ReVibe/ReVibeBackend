@@ -21,7 +21,7 @@ import io.jsonwebtoken.Claims;
 
 @RestController
 @RequestMapping("/jwt")
-@CrossOrigin
+@CrossOrigin(origins="*")
 public class JwtController {
 
 
