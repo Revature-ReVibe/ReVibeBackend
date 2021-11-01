@@ -72,6 +72,16 @@ public class VibeController {
         }
     }
     
+    @GetMapping(path="/all/post", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Vibe>> findAllPosts(@RequestHeader("Authorization") String jwt){
+    	try {
+            int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
+            return new ResponseEntity<>(this.vibeService.findAllPosts(), HttpStatus.OK);
+        }catch(java.lang.NullPointerException e) {
+            return null;
+        }
+    }
+    
     @GetMapping(path="/allReplies/{parentVibe}", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Vibe>> findAllReplies(@PathVariable int parentVibe, @RequestHeader("Authorization") String jwt){
     	try {

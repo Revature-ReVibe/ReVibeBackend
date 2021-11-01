@@ -40,8 +40,7 @@ public class VibeService {
     public Vibe saveReply(Vibe vibe, int parentId) {
         log.info("Saving a reply to vibe {}", parentId);      
         Vibe parentVibe = vibeRepository.findById(parentId).get();
-
-       
+        vibe.setVibeLike(0);
         LocalDateTime timeStamp = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         timeStamp.format(format);
@@ -64,6 +63,11 @@ public class VibeService {
     public List<Vibe> findAll(){
         log.info("Finding all vibes");
         return vibeRepository.findAll();
+    }
+    
+    public List<Vibe> findAllPosts(){
+        log.info("Finding all original posts");
+        return vibeRepository.findByParentVibeNull();
     }
 
     public Like like(int vibeId, int accountId) {
