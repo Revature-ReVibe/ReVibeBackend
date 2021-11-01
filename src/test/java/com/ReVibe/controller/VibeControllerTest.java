@@ -94,6 +94,25 @@ public class VibeControllerTest {
 	}
 
 	@Test
+		public void testFindById() throws Exception{
+			Vibe newVibe = new Vibe(11, "pic", "message", null, null, 3, 10, null, null);
+
+			when(vibeService.findById(Mockito.any(Integer.class))).thenReturn(newVibe);
+
+			this.mockMvc.perform(get("/vibe/find/{vibeId}", 11)
+				.contentType(MediaType.APPLICATION_JSON)
+				.header("Authorization", JwtService.createJWT("abc", "def", "3", 10000)))
+
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.vibeId", is(11)))
+				.andExpect(jsonPath("$.accountid", is(3)))
+				.andExpect(jsonPath("$.parentVibe", is(10)));
+
+			verify(vibeService,times(1)).findById(Mockito.anyInt());
+	}
+
+	@Test
 		public void testFindByPoster() throws Exception{
 			List<Vibe> vibes = new LinkedList<>();
 			vibes.add(new Vibe(1,"pic1","message1",null,null,2,null,null,null));
