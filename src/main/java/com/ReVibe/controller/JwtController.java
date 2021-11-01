@@ -22,7 +22,7 @@ import io.jsonwebtoken.Jwts;
 
 @RestController
 @RequestMapping("/jwt")
-@CrossOrigin
+@CrossOrigin(origins="*")
 public class JwtController {
 
 
