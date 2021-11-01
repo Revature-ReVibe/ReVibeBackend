@@ -62,17 +62,18 @@ public class VibeService {
     
     public List<Vibe> findAll(){
         log.info("Finding all vibes");
-        List<Vibe> vibes = vibeRepository.findAll();
+        
+        return vibeRepository.findAll();
+    }
+    
+    public List<Vibe> findAllPosts(){
+        log.info("Finding all original posts");
+        List<Vibe> vibes = vibeRepository.findByParentVibeNull();
         
         vibes.forEach(v -> {
             v.setReplyVibes(vibeRepository.findByParentVibe(v.getVibeId()));
         });
         return vibes;
-    }
-    
-    public List<Vibe> findAllPosts(){
-        log.info("Finding all original posts");
-        return vibeRepository.findByParentVibeNull();
     }
 
     public Like like(int vibeId, int accountId) {

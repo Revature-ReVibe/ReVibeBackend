@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ReVibe.model.Vibe;
 import com.ReVibe.service.JwtService;
 import com.ReVibe.service.VibeService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 @RestController("vibeController") @RequestMapping("/vibe")
+@CrossOrigin
 public class VibeController {
     private VibeService vibeService;
     
