@@ -4,6 +4,9 @@ import com.ReVibe.model.Like;
 import com.ReVibe.model.Vibe;
 import com.ReVibe.repository.LikeRepository;
 import com.ReVibe.repository.VibeRepository;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -24,21 +27,35 @@ public class VibeService {
     
     public Vibe saveVibe(Vibe vibe){
         log.info("Saving a new vibe");
+        LocalDateTime timeStamp = LocalDateTime.now();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        timeStamp.format(format);
+        vibe.setDate(timeStamp);
         vibe.setVibeLike(0);
         Vibe newVibe = vibeRepository.save(vibe);
-        log.info("{} saved", newVibe);
-    	return newVibe;
+    	  log.info("{} saved", newVibe);
+        return newVibe;
     }
     
     public Vibe saveReply(Vibe vibe, int parentId) {
+        log.info("Saving a reply to vibe {}", parentId);      
+        Vibe parentVibe = vibeRepository.findById(parentId).get();
+        vibe.setVibeLike(0);
+        LocalDateTime timeStamp = LocalDateTime.now();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        timeStamp.format(format);
+        vibe.setDate(timeStamp);
     	vibe.setParentVibe(parentId);
-        log.info("Saving a reply to vibe {}", parentId);
-        Vibe reply = vibeRepository.save(vibe);
-        log.info("{} saved", reply);
+
+    	Vibe reply = vibeRepository.save(vibe);
+        //parentVibe.getReplyVibes().add(reply);
+    	log.info("{} saved", reply);
+
     	return reply;
     }
     
     public Vibe findById(int id){
+
         log.info("Finding vibe with id {}", id);
         return vibeRepository.findById(id).get();
     }
@@ -51,6 +68,11 @@ public class VibeService {
             v.setReplyVibes(vibeRepository.findByParentVibe(v.getVibeId()));
         });
         return vibes;
+    }
+    
+    public List<Vibe> findAllPosts(){
+        log.info("Finding all original posts");
+        return vibeRepository.findByParentVibeNull();
     }
 
     public Like like(int vibeId, int accountId) {
@@ -74,8 +96,14 @@ public class VibeService {
         return null;
     }
     
+    public List<Vibe> findByParentVibe(int parentVibe){
+        log.info("Find all replies for vibe {}", parentVibe);
+        return vibeRepository.findByParentVibe(parentVibe);
+    }
+    
     public List<Like> findLikesByVibeId(int vibeId){
-        log.info("Finding all likes for vibe {}", vibeId);
+        log.info("Find all likes for vibe {}", vibeId);
+
         return likeRepository.findByVibeId(vibeId);
     }
 	

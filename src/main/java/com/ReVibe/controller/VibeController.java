@@ -37,15 +37,15 @@ public class VibeController {
         }catch(java.lang.NullPointerException e) {
             return null;
         }
-       
+
     }
     
-    @PostMapping(path="/createReply", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity <Vibe> saveReply(@RequestBody Vibe vibe, @RequestHeader("Authorization") String jwt){
+    @PostMapping(path="/createReply/{parentVibe}", consumes=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity <Vibe> saveReply(@RequestBody Vibe vibe,@PathVariable int parentVibe, @RequestHeader("Authorization") String jwt){
     	try {
             int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
             vibe.setAccountid(id);
-            return new ResponseEntity<>(this.vibeService.saveReply(vibe, vibe.getParentVibe()), HttpStatus.CREATED);
+            return new ResponseEntity<>(this.vibeService.saveReply(vibe, parentVibe), HttpStatus.CREATED);
         }catch(java.lang.NullPointerException e) {
             return null;
         }
@@ -67,6 +67,26 @@ public class VibeController {
     	try {
             int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
             return new ResponseEntity<>(this.vibeService.findAll(), HttpStatus.OK);
+        }catch(java.lang.NullPointerException e) {
+            return null;
+        }
+    }
+    
+    @GetMapping(path="/all/post", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Vibe>> findAllPosts(@RequestHeader("Authorization") String jwt){
+    	try {
+            int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
+            return new ResponseEntity<>(this.vibeService.findAllPosts(), HttpStatus.OK);
+        }catch(java.lang.NullPointerException e) {
+            return null;
+        }
+    }
+    
+    @GetMapping(path="/allReplies/{parentVibe}", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Vibe>> findAllReplies(@PathVariable int parentVibe, @RequestHeader("Authorization") String jwt){
+    	try {
+            int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
+            return new ResponseEntity<>(this.vibeService.findByParentVibe(parentVibe), HttpStatus.OK);
         }catch(java.lang.NullPointerException e) {
             return null;
         }
