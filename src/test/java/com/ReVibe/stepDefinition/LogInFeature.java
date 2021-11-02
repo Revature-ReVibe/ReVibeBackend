@@ -17,14 +17,13 @@ import io.cucumber.junit.platform.engine.Cucumber;
 
 
 
-@Cucumber
 public class LogInFeature {
 	private WebDriver driver;
 	private LogInPOM loginpage;
 
 	@Before
 	public void setup() {
-		System.setProperty("webdriver.chrome.driver", "Driver/chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "src/main/resources/Driver/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.get("http://localhost:4200/login");
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -35,12 +34,12 @@ public class LogInFeature {
 	@After
 	public void teardown() {
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(2500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		driver.quit();
+		
 
 	}
 	
@@ -62,7 +61,7 @@ public class LogInFeature {
 	
 	@Then("A user is redirected to the {string}")
 	public void a_user_is_redirected_to_the(String currentUrl) {
-		currentUrl = "http://localhost:4200/";
+		currentUrl = "http://localhost:4200/login";
 		assertEquals(currentUrl, driver.getCurrentUrl());
 	}
 	

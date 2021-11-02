@@ -31,12 +31,11 @@ public class LogOutFeature {
 	@After
 	public void teardown() {
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(2500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		driver.quit();
 
 	}
 	

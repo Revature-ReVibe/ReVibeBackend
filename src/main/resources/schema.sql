@@ -4,7 +4,7 @@ username varchar(50) not null unique,
 name varchar(100) not null,
 password varchar(50) not null,
 email varchar(150) not NULL Unique,
-profilepic varchar(200));
+profilepic varchar(1000));
 
 CREATE TABLE vibe(
 vibeid int unsigned not null auto_increment Primary key,
