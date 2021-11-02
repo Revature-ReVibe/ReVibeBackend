@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.hamcrest.Matchers.*;
 
+import com.ReVibe.model.Like;
 import com.ReVibe.model.Vibe;
 import com.ReVibe.service.VibeService;
 import com.ReVibe.service.JwtService;
@@ -78,7 +79,7 @@ public class VibeControllerTest {
 
 		when(vibeService.saveReply(newReplyVibe, newReplyVibe.getParentVibe())).thenReturn(newReplyVibe);
 
-		this.mockMvc.perform(post("/vibe/createReply")
+		this.mockMvc.perform(post("/vibe/createReply/"+newReplyVibe.getParentVibe())
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(asJsonString(newReplyVibe))
 			.header("Authorization", JwtService.createJWT("abc", "def", "3", 10000)))
@@ -161,7 +162,45 @@ public class VibeControllerTest {
 
 			verify(vibeService,times(1)).findAll();
 	}
+	@Test
+		public void testGetAllLikes() throws Exception{
+			List<Like> likes = new LinkedList<>();
+			likes.add(new Like(1,5,10));
+			likes.add(new Like(2,5,11));
+	
+			when(vibeService.findLikesByVibeId(Mockito.anyInt())).thenReturn(likes);
+	
+			this.mockMvc.perform(get("/vibe/likes/{vibeId}","5")
+				.contentType(MediaType.APPLICATION_JSON)
+				.header("Authorization", JwtService.createJWT("abc", "def", "2", 10000)))
+			
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$[0].vibeId", is(5)))
+				.andExpect(jsonPath("$[1].vibeId", is(5)));
+	
+	verify(vibeService,times(1)).findLikesByVibeId(Mockito.anyInt());
+	}
+	
+	@Test
+    public void testLike() throws Exception{
+        Like newLike = new Like(1,5,10);
 
+        when(vibeService.like(Mockito.anyInt(),Mockito.anyInt())).thenReturn(newLike);
+
+        this.mockMvc.perform(post("/vibe/like/{vibeId}", 5)
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", JwtService.createJWT("abc", "def", "10", 10000)))
+
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.likeId", is(1)))
+            .andExpect(jsonPath("$.vibeId", is(5)))
+            .andExpect(jsonPath("$.userId", is(10)));;
+
+        verify(vibeService,times(1)).like(Mockito.anyInt(),Mockito.anyInt());
+	}
+	
 	public static String asJsonString(final Object obj) {
 		try {
 			return new ObjectMapper().writeValueAsString(obj);
@@ -170,3 +209,4 @@ public class VibeControllerTest {
 		}
 	}
 }
+
