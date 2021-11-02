@@ -181,7 +181,26 @@ public class VibeControllerTest {
 	
 	verify(vibeService,times(1)).findLikesByVibeId(Mockito.anyInt());
 	}
+	
+	@Test
+    public void testLike() throws Exception{
+        Like newLike = new Like(1,5,10);
 
+        when(vibeService.like(Mockito.anyInt(),Mockito.anyInt())).thenReturn(newLike);
+
+        this.mockMvc.perform(post("/vibe/like/{vibeId}", 5)
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", JwtService.createJWT("abc", "def", "10", 10000)))
+
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.likeId", is(1)))
+            .andExpect(jsonPath("$.vibeId", is(5)))
+            .andExpect(jsonPath("$.userId", is(10)));;
+
+        verify(vibeService,times(1)).like(Mockito.anyInt(),Mockito.anyInt());
+	}
+	
 	public static String asJsonString(final Object obj) {
 		try {
 			return new ObjectMapper().writeValueAsString(obj);
