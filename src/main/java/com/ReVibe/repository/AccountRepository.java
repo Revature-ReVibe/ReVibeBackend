@@ -13,8 +13,6 @@ import org.springframework.data.jpa.repository.Query;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer>{
-	public<S extends Account>S save(S account);
-
 	public Account findByUserId(int id);
 	
 	public List<Account> findAll();

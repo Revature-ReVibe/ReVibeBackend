@@ -11,9 +11,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.LinkedList;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,6 +25,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.http.MediaType;
 import org.mockito.MockitoAnnotations;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,12 +35,12 @@ import static org.hamcrest.Matchers.*;
 import com.ReVibe.model.Vibe;
 import com.ReVibe.service.VibeService;
 import com.ReVibe.service.JwtService;
-
+@TestInstance(Lifecycle.PER_CLASS)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class VibeControllerTest {
 
-	@MockBean
+	@Mock
 	private VibeService vibeService;
 
 	@Autowired
@@ -46,7 +49,7 @@ public class VibeControllerTest {
 	@InjectMocks
 	private VibeController vibeController;
 
-	@BeforeEach 
+	@BeforeAll 
 	public void setup() {
 		MockitoAnnotations.openMocks(this);
 		mockMvc = MockMvcBuilders.standaloneSetup(vibeController).build();

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -18,6 +19,7 @@ import com.ReVibe.repository.LikeRepository;
 @TestInstance(Lifecycle.PER_CLASS)
 @SpringBootTest
 @AutoConfigureMockMvc
+@Disabled
 public class LikeRepositoryTest {
 	
 	@Autowired

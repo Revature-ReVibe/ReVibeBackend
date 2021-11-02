@@ -28,8 +28,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.Before;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -54,12 +57,12 @@ import com.ReVibe.model.Account;
 import com.ReVibe.service.AccountService;
 import com.ReVibe.service.JwtService;
 //import com.ReVibe.service.JwtService;
-
+@TestInstance(Lifecycle.PER_CLASS)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class AccountControllerTest {
 
-	@MockBean
+	@Mock	
 	private AccountService accountService;
 
 	@Autowired
@@ -68,7 +71,7 @@ public class AccountControllerTest {
 	@InjectMocks
 	private AccountController accountController;
 
-	@Before 
+	@BeforeAll
 	public void setup() {
 		MockitoAnnotations.openMocks(this);
 		mockMvc = MockMvcBuilders.standaloneSetup(accountController).build();
