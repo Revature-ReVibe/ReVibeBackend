@@ -22,8 +22,8 @@ private static String SECRET_KEY = "${jwt.secret}";
          * @param id            the String representing the id
          * @param issuer        the String representing the issuer
          * @param subject       the String representing the subject
-         * @param ttlMillis     the long representin
-         * @return 
+         * @param ttlMillis     the long representing the time in milliseconds
+         * @return              the String of the serialized java web token
          */
 	public static String createJWT(String id, String issuer, String subject, long ttlMillis) {
 		SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -49,9 +49,10 @@ private static String SECRET_KEY = "${jwt.secret}";
 	}//createJWT(String, String, String, long)
 	
         /**
-         * 
-         * @param jwt
-         * @return 
+         * This method decodes the java web token
+         * @param jwt   the String representing the java web token to be decoded
+         * @return      the Claim object decoded from the java web token;
+         *              May be <code>null</code>.
          */
 	public static Claims decodeJWT(String jwt) {
 		try {
