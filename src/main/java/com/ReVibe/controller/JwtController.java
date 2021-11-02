@@ -32,8 +32,10 @@ public class JwtController {
          * This method allows the user to log-in to an Account, given an Account
          * with the provided username and password exists.
          * @param account   the Account object with the username and password
-         *                  to be verified
-         * @return          the
+         *                  to be verified, passed as JSON in the body of the 
+         *                  request
+         * @return          the encoded String to be used for login verification;
+         *                  <code>null</code> otherwise.
          */
 	@PostMapping("/login")
 	public ResponseEntity<String> logUserIn(@RequestBody Account account) {
@@ -41,14 +43,16 @@ public class JwtController {
             if(account!=null) {
                 String jwt = JwtService.createJWT(UUID.randomUUID().toString(), "ReViveBackend", String.valueOf(account.getUserId()), 600000L);
                 return new ResponseEntity<String>("{\"jwt\":\"" + jwt + "\"}", HttpStatus.OK);
-            }
+            }//if account is not null
             return null;
-	}
+	}//logUserIn(Account)
 	
         /**
-         * 
-         * @param jwt
-         * @return 
+         * This method checks if the user is logged in to an Account
+         * @param jwt   the String to be decoded,
+         *              used for login authorization
+         * @return      <code>true</code> if the user is logged in;
+         *              <code>false</code> otherwise.
          */
 	@GetMapping("/authenticate")
 	public Boolean isLoggedIn(@RequestHeader("Authorization") String jwt) {
@@ -58,9 +62,9 @@ public class JwtController {
 			return true;
 		}}catch(io.jsonwebtoken.ExpiredJwtException e) {
 			
-		}
+		}//catch
 		return false;
-	}
+	}//isLoggedIn(String)
 	
 
-}
+}//JwtController
