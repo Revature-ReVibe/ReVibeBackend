@@ -1,4 +1,3 @@
-
 package com.ReVibe.model;
 
 import java.util.List;
@@ -17,6 +16,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * This class is the representation of the user.
+ * 
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -44,14 +47,15 @@ public class Account {
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name="accountid")
 	private List<Like> likes;
-
-
-
-
+        
+        /**
+         * This method overrides the toString method
+         * @return  the String of all the Account variables uniquely formatted
+         */
 	@Override
 	public String toString() {
 		return "Account [userId=" + userId + ", username=" + username + ", password=" + password + ", name=" + name
 				+ ", email=" + email + ", profilePic=" + profilePic + ", vibe=" + vibe + ", likes=" + likes + "]";
-	}
+	}//toString override
 
-}
+}//Account
