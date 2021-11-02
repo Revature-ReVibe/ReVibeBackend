@@ -132,6 +132,36 @@ public class VibeControllerTest {
 			verify(vibeService,times(1)).findByPoster(Mockito.anyInt());
 	}
 
+	@Test
+		public void testFindAll() throws Exception{
+			List<Vibe> vibes = new LinkedList<>();
+			vibes.add(new Vibe(0,"pic1","message1",null,null,7,null,null,null));
+			vibes.add(new Vibe(10,"pic2","message2",null,null,16,null,null,null));
+			vibes.add(new Vibe(11,"pic2","message2",null,null,16,10,null,null));
+
+			when(vibeService.findAll()).thenReturn(vibes);
+
+			this.mockMvc.perform(get("/vibe/all")
+				.contentType(MediaType.APPLICATION_JSON)
+				.header("Authorization", JwtService.createJWT("abc", "def", "7", 10000)))
+
+				.andDo(print())
+				.andExpect(status().isOk()) 
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$", hasSize(3)))
+				.andExpect(jsonPath("$[0].vibeId", is(0)))
+				.andExpect(jsonPath("$[0].accountid", is(7)))
+				.andExpect(jsonPath("$[0].parentVibe", nullValue()))
+				.andExpect(jsonPath("$[1].vibeId", is(10)))
+				.andExpect(jsonPath("$[1].accountid", is(16)))
+				.andExpect(jsonPath("$[1].parentVibe", nullValue()))
+				.andExpect(jsonPath("$[2].vibeId", is(11)))
+				.andExpect(jsonPath("$[2].accountid", is(16)))
+				.andExpect(jsonPath("$[2].parentVibe", is(10)));
+
+			verify(vibeService,times(1)).findAll();
+	}
+
 	public static String asJsonString(final Object obj) {
 		try {
 			return new ObjectMapper().writeValueAsString(obj);
