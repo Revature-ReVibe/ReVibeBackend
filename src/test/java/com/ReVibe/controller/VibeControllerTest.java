@@ -79,7 +79,7 @@ public class VibeControllerTest {
 
 		when(vibeService.saveReply(newReplyVibe, newReplyVibe.getParentVibe())).thenReturn(newReplyVibe);
 
-		this.mockMvc.perform(post("/vibe/createReply")
+		this.mockMvc.perform(post("/vibe/createReply/"+newReplyVibe.getParentVibe())
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(asJsonString(newReplyVibe))
 			.header("Authorization", JwtService.createJWT("abc", "def", "3", 10000)))
