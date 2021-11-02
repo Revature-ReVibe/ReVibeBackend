@@ -9,15 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer>{
-	/**
-         * This method persists the Account to the database
-         * This method can be removed in favor of the built-in save method that
-         * comes with extending JpaRepository.
-         * @param <S>       the type representing Account
-         * @param account   the Account object to be saved to the database
-         * @return          the Account object that was saved to the database
-         */
-        public<S extends Account>S save(S account);
         
         /**
          * This method finds the Account with the desired id
