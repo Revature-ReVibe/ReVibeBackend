@@ -32,7 +32,7 @@ public class AccountService {
         /**
          * This method finds the Account with the desired user id
          * @param id    the integer representing the id of the Account
-         * @return      the Account object found by the repository layer; May
+         * @return      the Account object found by the repository; May
          *              be <code>null</code>.
          */
 	public Account findByUserId(int id) {
@@ -42,8 +42,8 @@ public class AccountService {
 
         /**
          * This method finds all Accounts
-         * @return      the list of Account objects found by the repository
-         *              layer; May be empty.
+         * @return      the list of Account objects found by the repository;
+         *              May be empty.
          */
 	public List<Account> findAll(){
 		log.info("find all users");
@@ -53,7 +53,7 @@ public class AccountService {
         /**
          * This method finds the Account with the desired name
          * @param name  the String representing the name of the Account
-         * @return      the Account object found by the repository layer. May
+         * @return      the Account object found by the repository; May
          *              be <code>null</code>.
          */
 	public Account findByName(String name) {
@@ -74,8 +74,8 @@ public class AccountService {
          * This method searches for all Accounts with a name containing a 
          * specific String
          * @param name  the String to be searched by
-         * @return      the list of Account objects found by the repository
-         *              layer. May be empty.
+         * @return      the list of Account objects found by the repository;
+         *              May be empty.
          */
 	public List<Account> findBySearchName(String name) {
 		log.info("Search {} in Database", name);
@@ -99,7 +99,7 @@ public class AccountService {
          * @param username  the String representing the username of the Account
          * @param password  the String representing the password of the Account
          * @return          the Account object with the requested username and
-         *                  password found by the repository layer. May be 
+         *                  password found by the repository layer; May be 
          *                  <code>null</code>.
          */
 	public Account findByUsernameAndPassword(String username, String password) {
@@ -116,7 +116,7 @@ public class AccountService {
          * This method searches for an Account with the desired id
          * @param id    the integer representing the id of the Account
          * @return      the Account object with the requested id found by the 
-         *              repository. May be <code>null</code>.
+         *              repository; May be <code>null</code>.
          */
         public Account findById(int id) { 
                 return this.accountRepository.findById(id).get();
@@ -126,7 +126,7 @@ public class AccountService {
          * This method searches for an Account with a specific email
          * @param email     the String representing the email of the Account
          * @return          the Account object with the requested email found
-         *                  by the repository. May be <code>null</code>.
+         *                  by the repository; May be <code>null</code>.
          */
 	public Account findByEmail(String email) {
 		log.info("find user by {} in Database", email);
