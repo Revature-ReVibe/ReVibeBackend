@@ -59,7 +59,7 @@ import com.ReVibe.service.JwtService;
 @AutoConfigureMockMvc
 public class AccountControllerTest {
 
-	@MockBean
+	@Mock
 	private AccountService accountService;
 
 	@Autowired
