@@ -17,37 +17,50 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class JwtService {
 private static String SECRET_KEY = "${jwt.secret}";
 	
+        /**
+         * This method creates a Java Web Token
+         * @param id            the String representing the id
+         * @param issuer        the String representing the issuer
+         * @param subject       the String representing the subject
+         * @param ttlMillis     the long representin
+         * @return 
+         */
 	public static String createJWT(String id, String issuer, String subject, long ttlMillis) {
 		SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 		
-        long nowMillis = System.currentTimeMillis();
-        Date now = new Date(nowMillis);
+                long nowMillis = System.currentTimeMillis();
+                Date now = new Date(nowMillis);
 
-        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(SECRET_KEY);
-        
-        Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
-        
-        JwtBuilder builder = Jwts.builder().setId(id).setIssuedAt(now).setSubject(subject).setIssuer(issuer).signWith(signatureAlgorithm, signingKey);
-        
-        //if it has been specified, let's add the expiration
-        if (ttlMillis >= 0) {
-            long expMillis = nowMillis + ttlMillis;
-            Date exp = new Date(expMillis);
-            builder.setExpiration(exp);
-        }
+                byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(SECRET_KEY);
 
-        //Builds the JWT and serializes it to a compact, URL-safe string
-        return builder.compact();
-	}
+                Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
+
+                JwtBuilder builder = Jwts.builder().setId(id).setIssuedAt(now).setSubject(subject).setIssuer(issuer).signWith(signatureAlgorithm, signingKey);
+
+                //if it has been specified, let's add the expiration
+                if (ttlMillis >= 0) {
+                    long expMillis = nowMillis + ttlMillis;
+                    Date exp = new Date(expMillis);
+                    builder.setExpiration(exp);
+                }//if time Milliseconds is greater than or equal to 0
+
+                //Builds the JWT and serializes it to a compact, URL-safe string
+                return builder.compact();
+	}//createJWT(String, String, String, long)
 	
+        /**
+         * 
+         * @param jwt
+         * @return 
+         */
 	public static Claims decodeJWT(String jwt) {
 		try {
-		Claims claim = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY)).parseClaimsJws(jwt).getBody();
-		return claim;
+                    Claims claim = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY)).parseClaimsJws(jwt).getBody();
+                    return claim;
 		}catch(io.jsonwebtoken.SignatureException e) { 
 			return null;
 		}catch(io.jsonwebtoken.ExpiredJwtException e) {
 			return null;
-		}
-	}
-}
+		}//catch
+	}//decodeJWT(String)
+}//JwtService
