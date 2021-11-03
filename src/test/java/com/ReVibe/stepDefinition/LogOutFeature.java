@@ -1,9 +1,12 @@
 package com.ReVibe.stepDefinition;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -33,14 +36,7 @@ public class LogOutFeature {
 
 	@After
 	public void teardown() {
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-
+		driver.close();
 	}
 	
 	@Given("A user is on any {string} but login or registration")
@@ -60,6 +56,6 @@ public class LogOutFeature {
 
 	@Then("A user is returned to the {string}")
 	public void a_user_is_returned_to_the(String string) {
-	    Assertions.assertEquals("http://revibe-bucket.s3-website.us-east-2.amazonaws.com/login", driver.getCurrentUrl());
+		assertEquals("WELCOME", driver.findElement(By.xpath("//h1[contains(text(),'WELCOME')]")).getText());
 	}
 }

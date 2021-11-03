@@ -1,8 +1,11 @@
 package com.ReVibe.stepDefinition;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Assertions;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -10,6 +13,7 @@ import com.ReVibe.pom.HomePage;
 import com.ReVibe.pom.LogInPOM;
 import com.ReVibe.pom.RevibeRegistrationPage;
 
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -25,7 +29,7 @@ public class RegistrationFeature {
 	public void setup() {
 		System.setProperty("webdriver.chrome.driver", "src/main/resources/Driver/chromedriver.exe");
 		driver = new ChromeDriver();
-		driver.get("http://revibe-bucket.s3-website.us-east-2.amazonaws.com/");
+		driver.get("http://revibe-bucket.s3-website.us-east-2.amazonaws.com");
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		loginpage = new LogInPOM(driver);
@@ -33,43 +37,61 @@ public class RegistrationFeature {
 		registrationPage = new RevibeRegistrationPage(driver);
 	}
 	
+	@After
+	public void teardown() {
+		driver.close();
+	}
+	
+	//scenario 1
 
-	
-	
-	@Given("The user is on the registration page")
-	public void the_user_is_on_the_registration_page() {
+		@Given("A user is visiting the the login page")
+		public void a_user_is_visiting_the_the_login_page() {
+		    
+		}
+
+
+		@When("A user clicks on the {string} button")
+		public void a_user_clicks_on_the_button(String string) {
 		loginpage.clickCreateNewAccount();
-	}
-
-	@When("the user inputs their name")
-	public void the_user_inputs_their_name() {
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		registrationPage.setName("TestUser2");
-	}
-
-	@When("the user inputs a username")
-	public void the_user_inputs_a_username() {
-		registrationPage.setUsername("TestUsername2");
-	}
-
-	@When("the user inputs a password")
-	public void the_user_inputs_a_password() {
-		registrationPage.setPassword("test");
-	}
-
-	@When("the user inputs an email")
-	public void the_user_inputs_an_email() {
-		registrationPage.setEmail("TestUser@email.com");
-	}
-
-	@When("the user clicks the submit button")
-	public void the_user_clicks_the_submit_button() {
-		registrationPage.clickSubmit();
-	}
+		}
+		@Then("The user is redirected to the {string}")
+		public void the_user_is_redirected_to_the(String string) {
+			assertEquals("Create An Account", driver.findElement(By.xpath("//h1[contains(text(),'Create an Account')]")).getText());
+		}
 	
-	@Then("user redirected back to login")
-	public void user_redirected_back_to_login() {
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		Assertions.assertEquals("http://revibe-bucket.s3-website.us-east-2.amazonaws.com/login", driver.getCurrentUrl());
-	}
+	
+	
+	//scenario 2
+			@Given("A user is on the registration page")
+			public void a_user_is_on_the_registration_page() {
+			    loginpage.clickCreateNewAccount();
+			}
+
+
+			@When("a user enter a valid {string}, {string}, {string}, {string} and {string}")
+			public void a_user_enter_a_valid_and(String name, String username, String password, String email, String profilepic) {
+				name="name";
+				username="username";
+				password="password";
+				email="email";
+				profilepic="profilepic";
+				registrationPage.setName(name);
+				registrationPage.setUsername(username);
+				registrationPage.setPassword(password);
+				registrationPage.setEmail(email);
+				registrationPage.setPic(profilepic);
+			}
+			@When("a user clicks {string}")
+			public void a_user_clicks(String string) {
+			  registrationPage.clickSubmit();
+			}
+			@Then("a user will be rerouted to the {string}")
+			public void a_user_will_be_rerouted_to_the(String string) {
+				assertEquals("WELCOME", driver.findElement(By.xpath("//h1[contains(text(),'WELCOME')]")).getText());
+
+			}
+
+
+
+
 }

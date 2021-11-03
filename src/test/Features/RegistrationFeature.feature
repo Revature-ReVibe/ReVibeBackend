@@ -31,9 +31,3 @@ Feature: Registration
 	When a user enter a valid "name", "username", "password", "email address" and "profile picture"
 	And a user clicks "submit"
 	Then a user will be rerouted to the "login page"
-  
-  @reg3
-	Scenario: A user doesnt fill out the registration form
-	Given A user is currently on the registration page
-	When a user clicks the "submit" button without entering information
-	Then the user sees

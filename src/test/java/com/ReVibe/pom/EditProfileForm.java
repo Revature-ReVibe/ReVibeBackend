@@ -10,7 +10,7 @@ public class EditProfileForm {
 		PageFactory.initElements(driver, this);
 	}
 	
-	@FindBy(id="name")
+	@FindBy(id="username")
 	private WebElement NameBox;
 	
 	public void enterNameBox() {
@@ -38,7 +38,7 @@ public class EditProfileForm {
 		this.PasswordBox.sendKeys("testpassword");
 	}
 	
-	@FindBy(xpath="/html[1]/body[1]/app-root[1]/app-general-form[1]/div[1]/form[1]/div[1]/button[1]/span[1]")
+	@FindBy(xpath="//body/app-root[1]/app-general-form[1]/div[1]/form[1]/div[1]/button[1]")
 	private WebElement SubmitButton;
 	
 	public void clickSubmitButton() {

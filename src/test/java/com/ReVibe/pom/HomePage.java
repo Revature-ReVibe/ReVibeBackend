@@ -24,7 +24,7 @@ public class HomePage {
 		this.AddVibeButton.click();
 	}
 	
-	@FindBy(id="mat-input-6")
+	@FindBy(xpath="/html[1]/body[1]/div[1]/div[2]/div[1]/mat-dialog-container[1]/app-new-vibe[1]/div[1]/mat-card[1]/mat-card-content[1]/form[1]/mat-form-field[1]/div[1]/div[1]/div[1]/textarea[1]")
 	private WebElement WhatsUpBox;
 	
 	public void enterWhatsUpBox() {
@@ -66,4 +66,12 @@ public class HomePage {
 	public void clickLogoutTag() {
 		this.LogoutTag.click();
 	}
+	
+	@FindBy(xpath = "//body/app-root[1]/app-home[1]/app-general-feed[1]/app-feed[1]/div[1]/cdk-virtual-scroll-viewport[1]/div[1]/app-vibe[1]/div[1]/mat-card[1]/mat-card-actions[1]/button[1]")
+	private WebElement checkbox;
+	
+	public void clickCheckBox() {
+		this.checkbox.click();
+	}
+
 }

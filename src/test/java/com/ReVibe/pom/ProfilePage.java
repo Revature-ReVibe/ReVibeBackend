@@ -17,4 +17,10 @@ public class ProfilePage {
 	public void clickEditProfile(){
 		this.EditButton.click();
 	}
+	
+	@FindBy(xpath="//a[@id='home']")
+	private WebElement homePageButton;
+	public void clickHomePage() {
+		this.homePageButton.click();
+	}
 }
