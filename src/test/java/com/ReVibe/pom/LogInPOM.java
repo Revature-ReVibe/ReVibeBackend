@@ -44,7 +44,12 @@ public class LogInPOM {
 		createNewAccountBtn.click();
 	}
 	
+	@FindBy(xpath="//a[@id='logout']")
+	private WebElement LogoutButton;
 	
+	public void clickLogout() {
+		this.LogoutButton.click();
+	}
 	
 	
 			
