@@ -6,9 +6,10 @@ password varchar(50) not null,
 email varchar(150) not NULL Unique,
 profilepic varchar(1000));
 
+
 CREATE TABLE vibe(
 vibeid int unsigned not null auto_increment Primary key,
-vibepic varchar(500),
+vibepic varchar(800),
 vibemessage varchar(300),
 accountid int unsigned not null,
 parentvibe int,

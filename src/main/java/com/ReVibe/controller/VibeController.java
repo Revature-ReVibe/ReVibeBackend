@@ -20,8 +20,9 @@ import com.ReVibe.service.VibeService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@RestController("vibeController") @RequestMapping("/vibe")
-@CrossOrigin
+@RestController("vibeController") 
+@RequestMapping("/vibe")
+@CrossOrigin(origins="*")
 public class VibeController {
     private VibeService vibeService;
     
