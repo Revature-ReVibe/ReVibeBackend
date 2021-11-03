@@ -17,11 +17,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -37,12 +37,14 @@ import com.ReVibe.model.Account;
 import com.ReVibe.service.AccountService;
 import com.ReVibe.service.JwtService;
 //import com.ReVibe.service.JwtService;
-
+@TestInstance(Lifecycle.PER_CLASS)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class AccountControllerTest {
 
-	@Mock
+
+	@Mock	
+
 	private AccountService accountService;
 
 	@Autowired
@@ -51,7 +53,9 @@ public class AccountControllerTest {
 	@InjectMocks
 	private AccountController accountController;
 
+
 	@BeforeEach
+
 	public void setup() {
 		MockitoAnnotations.openMocks(this);
 		mockMvc = MockMvcBuilders.standaloneSetup(accountController).build();

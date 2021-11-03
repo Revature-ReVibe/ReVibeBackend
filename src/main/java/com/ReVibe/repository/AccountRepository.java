@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer>{
+
         
         /**
          * This method finds the Account with the desired id
@@ -18,6 +19,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer>{
          * @return      the Account object with the desired id;
          *              <code>null</code> otherwise.
          */
+
 	public Account findByUserId(int id);
 	
         /**

@@ -175,6 +175,7 @@ public class TestAccountService {
 		
 		when(accountRepository.findByEmail(email)).thenReturn(account);
 		
+		verify(accountRepository, times(1)).findByEmail(email);
 		assertEquals(email, account.getEmail());
 	}
 }

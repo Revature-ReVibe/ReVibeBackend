@@ -16,6 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.LinkedList;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -35,6 +36,7 @@ import com.ReVibe.service.JwtService;
 import com.ReVibe.service.VibeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+
 @SpringBootTest
 @AutoConfigureMockMvc
 public class VibeControllerTest {
@@ -48,7 +50,7 @@ public class VibeControllerTest {
 	@InjectMocks
 	private VibeController vibeController;
 
-	@BeforeEach 
+	@BeforeEach
 	public void setup() {
 		MockitoAnnotations.openMocks(this);
 		mockMvc = MockMvcBuilders.standaloneSetup(vibeController).build();
